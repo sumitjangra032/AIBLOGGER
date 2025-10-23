@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -78,3 +79,6 @@ Automated Ai blogging web app
 # AIBLOGGER
 AUTOMATED AI BLOGGING APP 
 >>>>>>> 2935f86fe2232a0107b049939bbd5b369d63513f
+=======
+# AIBLOGGER
+>>>>>>> 3ee448e79945a0c3f1c9ac45a7c2239d4b097a05
