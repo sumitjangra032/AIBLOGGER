@@ -1,0 +1,14 @@
+// Firestore security rules version
+rules_version = '2';
+// Define rules for Firestore database
+service cloud.firestore {
+  // Match all databases in the project
+  match /databases/{database}/documents {
+    // Match all documents in all collections
+    match /{document=**} {
+      // WARNING: This allows public read/write access to all documents
+      // This is NOT secure for production - replace with proper authentication rules
+      allow read, write: if true;
+    }
+  }
+}
