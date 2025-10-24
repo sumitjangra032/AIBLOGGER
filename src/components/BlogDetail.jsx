@@ -54,7 +54,7 @@ export default function BlogDetail(){
   // Update page title and meta tags
   useEffect(() => {
     if (blog) {
-      document.title = `${blog.title} - SkyBlogs`;
+      document.title = `${blog.title} - StoryMint`;
 
       // Update meta description
       const metaDescription = document.querySelector(
@@ -82,7 +82,7 @@ export default function BlogDetail(){
     }
 
     return () => {
-      document.title = "SkyBlogs";
+      document.title = "StoryMint";
     };
   }, [blog]);
 

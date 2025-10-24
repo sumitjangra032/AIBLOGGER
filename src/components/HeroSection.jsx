@@ -1,6 +1,22 @@
 import React, { useEffect, useState, useRef } from "react";
 
-const categories = ["technology", "travel", "lifestyle"]; // your categories
+const categories = [
+  "Technology",
+  "Travel",
+  "Lifestyle",
+  "Business",
+  "Health",
+  "Science",
+  "Entertainment",
+  "Sports",
+  "Food",
+  "Fashion",
+  "Crypto",
+  "Education",
+  "Environment",
+  "Politics",
+  "Art",
+];
 
 // Randomly pick 10 images with associated categories
 const getRandomImages = () => {
@@ -38,7 +54,6 @@ const categories_quotes = [
   { name: "Politics", description: "Stay informed about global politics, policies, and government affairs." },
   { name: "Art", description: "Discover creative expressions, masterpieces, and artistic inspiration." },
 ];
-
 
 
 const HeroCarousel = () => {

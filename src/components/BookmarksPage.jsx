@@ -14,7 +14,7 @@ import { doc, getDoc } from "firebase/firestore";
 export default function BookmarksPage(){
   const darkMode = false;
   const [user] = useAuthState(auth);
-  const [bookmarks, setBookmarks] = useState([]);
+  const [, setBookmarks] = useState([]);
   const [blogs, setBlogs] = useState([]);
   const [filteredBlogs, setFilteredBlogs] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -39,7 +39,7 @@ export default function Header({ onSearch, searchTerm }){
             <h1
               className={`text-2xl font-bold ${darkMode ? "text-white" : "text-slate-800"}`}
             >
-              SkyBlogs
+              StoryMint
             </h1>
           </Link>
 

@@ -7,6 +7,9 @@ import SignIn from './components/SignIn';
 import BlogDetail from "./components/BlogDetail";
 import BookmarksPage from "./components/BookmarksPage";
 import HistoryPage from "./components/HistoryPage";
+import Footer from "./components/Footer";
+import ScrollToTop from './components/ScrollToTop';
+
 
 
 
@@ -20,18 +23,21 @@ function App() {
   };
   return (
           
-            <div className="app min-h-screen">
-              <Header onSearch={handleSearch} searchTerm={searchTerm} />
-              <main>
-                <Routes>
-                  <Route path="/" element={<HomePage searchTerm={searchTerm} />} />
-                  <Route path="/blog/:id" element={<BlogDetail />} />
-                  <Route path="/bookmarks" element={<BookmarksPage />} />
-                  <Route path="/history" element={<HistoryPage />} />
-                  <Route path="/signin" element={<SignIn />} />
-                </Routes>
-              </main>
-            </div>
+        <div className="app min-h-screen">
+          <Header onSearch={handleSearch} searchTerm={searchTerm} />
+          <main>
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<HomePage searchTerm={searchTerm} />} />
+              <Route path="/blog/:id" element={<BlogDetail />} />
+              <Route path="/bookmarks" element={<BookmarksPage />} />
+              <Route path="/history" element={<HistoryPage />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/signin" element={<Footer />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
        
   );
 }

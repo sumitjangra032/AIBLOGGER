@@ -78,7 +78,11 @@ export default function BlogCard({
 
   return (
     <article
-      className={`group relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
+      className={`h-full group relative overflow-hidden rounded-2xl 
+        transition-all duration-300 
+        shadow-md 
+        hover:-translate-y-1 
+        hover:shadow-lift-glow${
         darkMode
           ? "bg-slate-800 border border-slate-700"
           : "bg-white border border-sky-100"

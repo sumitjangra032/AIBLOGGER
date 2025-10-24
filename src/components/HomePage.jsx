@@ -7,6 +7,8 @@ import BlogCard from "./BlogCard";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth} from "../firebase";
 import HeroCarousel from "./HeroSection";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 
 export default function HomePage({searchTerm}){
@@ -35,6 +37,18 @@ export default function HomePage({searchTerm}){
         return () => clearInterval(interval);
     }, []);
 
+    useEffect(() => {
+    AOS.init({
+      duration: 400,
+      offset: 50,
+      easing: "ease-in-out",
+      once: true,
+      });
+    }, []);
+
+    useEffect(() => {
+      AOS.refresh(); // re-initialize after data changes
+    }, [filteredBlogs]);
 
     // Load initial blogs
     useEffect(() => {
@@ -166,15 +180,15 @@ export default function HomePage({searchTerm}){
 
     return (
     <div
-      className={`min-h-screen transition-colors duration-200 ${
+      className={`min-h-screen transition-colors duration-200 pb-20 ${
         darkMode ? "bg-slate-900" : "bg-gradient-to-br from-sky-50 to-blue-100"
       }`}
     >
+      <div className="w-full h-100 mb-8">
+      <HeroCarousel />
+      </div>
+
       <div className="container mx-auto px-4 py-8">
-        {/* Header Section */}
-        <div>
-        <HeroCarousel />
-        </div>
 
         {/* Controls */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 space-y-4 md:space-y-0">
@@ -294,8 +308,16 @@ export default function HomePage({searchTerm}){
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
+            
             {filteredBlogs.map((blog) => (
+              <div
+                key={blog.id}
+                data-aos="fade-up"
+                data-aos-anchor-placement="bottom-bottom"
+                data-aos-delay="80"
+                data-aos-duration="400"
+              >
               <BlogCard
                 key={blog.id}
                 blog={blog}
@@ -303,6 +325,7 @@ export default function HomePage({searchTerm}){
                 onBookmarkToggle={handleBookmarkToggle}
                 onViewIncrement={handleViewIncrement}
               />
+              </div>
             ))}
           </div>
         )}

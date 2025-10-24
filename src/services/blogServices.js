@@ -77,7 +77,7 @@ const generateAIBlog = async () => {
     - Minimum 5000 words, written in a natural, human-like, conversational tone.
     - Must be SEO-optimized with proper keyword density, bolded keywords, and relevant LSI terms.
     - Include the following structure:
-      - Introduction (hook, brief context, what readers will learn)
+      - (hook, brief context, what readers will learn)
       - H2 and H3 subheadings for logical flow
       - Short paragraphs for readability
       - Bullet points or numbered lists where helpful
@@ -112,7 +112,8 @@ const generateAIBlog = async () => {
     imageUrl: <optional image link>  
 
 
-    Do not include emojis, Markdown, or bullet symbols — only plain text in this format.”
+    Do not include emojis, Markdown, or bullet symbols — only plain text in this format. Also Please dont repeat names authod always must be different names
+    And also dont use Introduction words at starting of content
     `;
 
     const retries = 10;

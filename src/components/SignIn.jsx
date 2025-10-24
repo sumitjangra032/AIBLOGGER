@@ -48,7 +48,7 @@ function SignIn(){
               darkMode ? "text-white" : "text-slate-900"
             }`}
           >
-            Welcome to SkyBlogs
+            Welcome to StoryMint
           </h1>
           <p
             className={`mt-2 ${darkMode ? "text-slate-300" : "text-slate-600"}`}
