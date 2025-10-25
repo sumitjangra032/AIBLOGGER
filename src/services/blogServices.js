@@ -223,7 +223,7 @@ export const blogService = {
     const q = query(
       collection(db, "blogs"),
       orderBy("createdAt", "desc"),
-      limit(12),
+      limit(60),
     );
 
     // Set up real-time listener that calls callback whenever data changes
@@ -309,8 +309,8 @@ export const blogService = {
   // },
 
   incrementViews: async (blogId) => {
-  console.log(`incrementViews called for blog: ${blogId}`);
-  console.trace(`Stack trace for blog: ${blogId}`); // shows where it was called from
+  // console.log(`incrementViews called for blog: ${blogId}`);
+  // console.trace(`Stack trace for blog: ${blogId}`); // shows where it was called from
 
   try {
     // Get reference to specific blog document

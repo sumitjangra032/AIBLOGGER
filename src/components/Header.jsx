@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Search, Cloud, User, Bookmark } from "lucide-react";
 import { auth } from "../firebase";
@@ -11,6 +11,7 @@ export default function Header({ onSearch, searchTerm }){
   const darkMode = false;
   const [user] = useAuthState(auth);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [scrollWidth, setScrollWidth] = useState(0);
 
   const handleSignOut = async () => {
     try {
@@ -21,15 +22,29 @@ export default function Header({ onSearch, searchTerm }){
     }
   };
 
+    useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      setScrollWidth(scrollPercent);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <header
       className={`sticky top-0 z-50 ${
         darkMode
           ? "bg-slate-900/95 border-slate-700"
-          : "bg-sky-50/95 border-sky-200"
+          : "bg-[#0f172a]"
       } backdrop-blur-md border-b transition-colors duration-200`}
     >
       <div className="container mx-auto px-4 py-4">
+        <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r bg-sky-500 rounded-full"
+           style={{ width: `${scrollWidth}%`, transition: "width 0.2s ease-out" }} />
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
@@ -37,7 +52,7 @@ export default function Header({ onSearch, searchTerm }){
               className={`w-8 h-8 ${darkMode ? "text-blue-400" : "text-sky-500"}`}
             />
             <h1
-              className={`text-2xl font-bold ${darkMode ? "text-white" : "text-slate-800"}`}
+              className={`text-2xl font-bold ${darkMode ? "text-white" : "text-white"}`}
             >
               StoryMint
             </h1>
@@ -92,17 +107,27 @@ export default function Header({ onSearch, searchTerm }){
                 className={`font-medium hover:text-opacity-80 transition-colors ${
                   darkMode
                     ? "text-slate-300 hover:text-blue-400"
-                    : "text-slate-700 hover:text-sky-500"
+                    : "text-lg font-semibold text-white"
                 }`}
               >
                 Home
+              </Link>
+              <Link
+                to="/AboutUs"
+                className={`font-medium hover:text-opacity-80 transition-colors ${
+                  darkMode
+                    ? "text-slate-300 hover:text-blue-400"
+                    : "text-lg font-semibold text-white"
+                }`}
+              >
+                About Us
               </Link>
               <Link
                 to="/history"
                 className={`font-medium hover:text-opacity-80 transition-colors ${
                   darkMode
                     ? "text-slate-300 hover:text-blue-400"
-                    : "text-slate-700 hover:text-sky-500"
+                    : "text-lg font-semibold text-white"
                 }`}
               >
                 History

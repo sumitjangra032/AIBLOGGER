@@ -1,6 +1,6 @@
 import {useState,useEffect,useCallback} from "react";
-import {Filter,RefreshCw,ChevronDown} from "lucide-react";
-// import {Filter,ChevronDown} from "lucide-react";
+// import {Filter,RefreshCw,ChevronDown} from "lucide-react";
+import {Filter,ChevronDown} from "lucide-react";
 import {BLOG_CATEGORIES} from "../types/blog";
 import {blogService} from "../services/blogServices";
 import BlogCard from "./BlogCard";
@@ -20,8 +20,9 @@ export default function HomePage({searchTerm}){
     const [selectedCategory, setSelectedCategory] = useState("all");
     const [showFilters, setShowFilters] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [refreshing, setRefreshing] = useState(false);
+    const [, setRefreshing] = useState(false);
     const [lastRefresh, setLastRefresh] = useState(new Date());
+    const [currentTime, setCurrentTime] = useState(new Date());
     const darkMode  = false;
 
     // Auto-refresh every hour
@@ -32,9 +33,16 @@ export default function HomePage({searchTerm}){
       },
       60 * 60 * 1000,
     ); // 1 hour
-
-
         return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setCurrentTime(new Date());
+        console.log("Current time updated : ", new Date());
+      }, 60000); // every minute
+
+      return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
@@ -42,7 +50,8 @@ export default function HomePage({searchTerm}){
       duration: 400,
       offset: 50,
       easing: "ease-in-out",
-      once: true,
+      // anchorPlacement: "center-center",
+      once: false,
       });
     }, []);
 
@@ -105,11 +114,13 @@ export default function HomePage({searchTerm}){
         try { 
         await blogService.generateBlogs(1);
         await blogService.cleanupOldBlogs();
+
         setLastRefresh(new Date());
-        } catch (error) {
+        console.log("Blogs refreshed at inside the HandleRefresh ", new Date());
+      } catch (error) {
         console.error("Error refreshing blogs:", error);
-        
-        } finally {
+        } 
+        finally {
         setRefreshing(false);
         }
      };
@@ -145,8 +156,9 @@ export default function HomePage({searchTerm}){
     };
 
     const formatLastRefresh = () => {
-    const now = new Date();
-    const diff = now.getTime() - lastRefresh.getTime();
+    console.log("lastRefresh : and currentTime ", lastRefresh.getTime(), currentTime.getTime());
+
+    const diff = currentTime.getTime() - lastRefresh.getTime();
     const minutes = Math.floor(diff / 60000);
 
     if (minutes < 1) return "Just now";
@@ -156,6 +168,7 @@ export default function HomePage({searchTerm}){
     if (hours < 24) return `${hours}h ago`;
 
     const days = Math.floor(hours / 24);
+    console.log("minutes since last refresh: ", minutes);
     return `${days}d ago`;
     };
 
@@ -259,7 +272,7 @@ export default function HomePage({searchTerm}){
             >
               Last updated: {formatLastRefresh()}
             </span>
-            <button
+            {/* <button
               onClick={handleRefresh}
               disabled={refreshing}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
@@ -272,7 +285,7 @@ export default function HomePage({searchTerm}){
                 className={`w-4 h-4 ${refreshing ? "animate-spin" : ""}`}
               />
               <span>{refreshing ? "Refreshing..." : "Refresh"}</span>
-            </button>
+            </button> */}
           </div>
         </div>
 
@@ -314,9 +327,11 @@ export default function HomePage({searchTerm}){
               <div
                 key={blog.id}
                 data-aos="fade-up"
-                data-aos-anchor-placement="bottom-bottom"
+                // data-aos-offset="-100"
+                // data-aos-anchor-placement="center-center"
                 data-aos-delay="80"
                 data-aos-duration="400"
+                
               >
               <BlogCard
                 key={blog.id}

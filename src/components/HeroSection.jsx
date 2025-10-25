@@ -38,21 +38,81 @@ const getRandomImages = () => {
 };
 
 const categories_quotes = [
-  { name: "Technology", description: "Discover the latest trends, gadgets, and innovations shaping our world." },
-  { name: "Travel", description: "Embark on journeys and explore breathtaking destinations around the globe." },
-  { name: "Lifestyle", description: "Get tips, trends, and inspiration for a vibrant and fulfilling life." },
-  { name: "Business", description: "Stay updated with strategies, insights, and success stories in the business world." },
-  { name: "Health", description: "Learn about wellness, fitness, and healthy living for a better you." },
-  { name: "Science", description: "Dive into discoveries, research, and fascinating scientific breakthroughs." },
-  { name: "Entertainment", description: "Catch up on movies, music, shows, and everything pop culture." },
-  { name: "Sports", description: "Follow games, athletes, and exciting sports updates from around the world." },
-  { name: "Food", description: "Explore delicious recipes, culinary tips, and gastronomic adventures." },
-  { name: "Fashion", description: "Stay ahead with trends, styling tips, and iconic fashion statements." },
-  { name: "Crypto", description: "Understand the world of cryptocurrencies, blockchain, and digital finance." },
-  { name: "Education", description: "Access learning resources, insights, and knowledge to grow your mind." },
-  { name: "Environment", description: "Learn about sustainability, climate change, and eco-friendly living." },
-  { name: "Politics", description: "Stay informed about global politics, policies, and government affairs." },
-  { name: "Art", description: "Discover creative expressions, masterpieces, and artistic inspiration." },
+  {
+    name: "Technology",
+    description:
+      "Discover the latest innovations redefining our digital future — from AI breakthroughs and robotics to smart gadgets and software trends. Stay ahead with expert insights, detailed reviews, and the tech stories shaping tomorrow's world."
+  },
+  {
+    name: "Travel",
+    description:
+      "Embark on breathtaking journeys across continents, uncover hidden gems, and immerse yourself in diverse cultures. From travel guides and itineraries to budget tips and wanderlust inspiration — explore the world, one destination at a time."
+  },
+  {
+    name: "Lifestyle",
+    description:
+      "Find inspiration to live a balanced, stylish, and fulfilling life. Explore topics on self-care, productivity, fashion, and mindfulness — everything that helps you create a lifestyle that reflects your personality and purpose."
+  },
+  {
+    name: "Business",
+    description:
+      "Stay updated with in-depth insights on entrepreneurship, startups, leadership, and corporate strategy. Learn how industry experts build success stories, adapt to market changes, and transform innovative ideas into thriving ventures."
+  },
+  {
+    name: "Health",
+    description:
+      "Your go-to source for fitness, nutrition, and mental well-being. Learn how to maintain a balanced lifestyle with healthy habits, expert advice, and science-backed tips to help you live a happier, healthier life every day."
+  },
+  {
+    name: "Science",
+    description:
+      "Dive deep into the wonders of discovery — from space exploration and physics to medical advancements and cutting-edge research. Explore how science continues to expand the boundaries of what we know about the universe."
+  },
+  {
+    name: "Entertainment",
+    description:
+      "Stay in tune with the latest in movies, web series, music, and pop culture. Get reviews, celebrity news, and trending updates that keep you entertained and connected to the ever-evolving world of showbiz."
+  },
+  {
+    name: "Sports",
+    description:
+      "Follow the action from your favorite games, teams, and athletes around the world. From live match updates and analysis to inspiring stories of victory — experience the thrill and passion that fuel global sports culture."
+  },
+  {
+    name: "Food",
+    description:
+      "Explore a world of flavors through mouthwatering recipes, restaurant reviews, and culinary adventures. Learn cooking tips, discover food trends, and experience the joy of creating and savoring delicious dishes."
+  },
+  {
+    name: "Fashion",
+    description:
+      "Unveil the latest trends, timeless styles, and fashion-forward inspirations. From streetwear to haute couture, learn how to express yourself through style, accessorizing, and confident dressing for every occasion."
+  },
+  {
+    name: "Crypto",
+    description:
+      "Understand the evolving landscape of digital currencies, blockchain, and decentralized finance. Stay informed with news, guides, and expert analysis on how cryptocurrency is reshaping the global economy."
+  },
+  {
+    name: "Education",
+    description:
+      "Expand your knowledge with insights into learning, career development, and personal growth. Discover modern education trends, online learning platforms, and resources that empower lifelong learners to thrive."
+  },
+  {
+    name: "Environment",
+    description:
+      "Explore sustainability, renewable energy, and climate change awareness. Learn how small actions can make a big difference in protecting our planet and building a greener, more responsible future for generations to come."
+  },
+  {
+    name: "Politics",
+    description:
+      "Stay informed about global affairs, government policies, and political movements shaping the world. Get balanced perspectives, detailed analysis, and thought-provoking insights into the decisions that impact society."
+  },
+  {
+    name: "Art",
+    description:
+      "Celebrate creativity through visual arts, photography, music, and design. Discover inspiring artists, their stories, and how art continues to influence culture, emotion, and human connection across the globe."
+  }
 ];
 
 
@@ -122,7 +182,7 @@ const HeroCarousel = () => {
       onTouchEnd={handleTouchEnd}
     >
       {/* Carousel wrapper */}
-      <div className="relative h-96 md:h-[600px] overflow-hidden rounded-lg mb-20">
+      <div className="relative h-96 md:h-[800px] overflow-hidden rounded-lg pb-20">
         {images.map((img, index) => (
           <div
             key={index}
@@ -136,12 +196,12 @@ const HeroCarousel = () => {
               className="w-full h-full object-cover"
             />
             {/* Category overlay */}
-            <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 text-center text-white px-4 py-2 rounded-md">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white px-4 py-2">
             <h2 className="text-4xl font-bold mb-2">
                 {img.category[0].toUpperCase() + img.category.slice(1)}
             </h2>
-            <p className="text-lg font-medium">
-                {categories_quotes.find(cq => cq.name.toLowerCase() === img.category)?.description || ""}
+            <p className="text-lg font-medium text-white">
+                {categories_quotes.find(cq => cq.name.toLowerCase() === img.category.toLowerCase())?.description || ""}
             </p>
             </div>
 

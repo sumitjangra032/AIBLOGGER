@@ -8,16 +8,8 @@ const categories = [
   "Business",
   "Health",
   "Science",
-  "Entertainment",
-  "Sports",
-  "Food",
-  "Fashion",
-  "Crypto",
-  "Education",
-  "Environment",
-  "Politics",
-  "Art",
 ];
+
 
 const Footer = () => {
 
@@ -83,7 +75,11 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold text-white mb-4">Categories</h3>
           <ul className="space-y-2 text-sm">
-            {categories.map((category) => mycategory(category))}
+            {categories.map((category, index) => (
+              <React.Fragment key={category.id || index}>
+                {mycategory(category)}
+              </React.Fragment>
+            ))}
           </ul>
         </div>
 

@@ -8,6 +8,8 @@ import BlogDetail from "./components/BlogDetail";
 import BookmarksPage from "./components/BookmarksPage";
 import HistoryPage from "./components/HistoryPage";
 import Footer from "./components/Footer";
+import AboutUs from "./components/AboutUs";
+
 import ScrollToTop from './components/ScrollToTop';
 
 
@@ -31,9 +33,9 @@ function App() {
               <Route path="/" element={<HomePage searchTerm={searchTerm} />} />
               <Route path="/blog/:id" element={<BlogDetail />} />
               <Route path="/bookmarks" element={<BookmarksPage />} />
+              <Route path="/AboutUs" element={<AboutUs />} />
               <Route path="/history" element={<HistoryPage />} />
               <Route path="/signin" element={<SignIn />} />
-              <Route path="/signin" element={<Footer />} />
             </Routes>
           </main>
           <Footer />
