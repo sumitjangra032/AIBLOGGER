@@ -90,14 +90,15 @@ export default function BlogCard({
     >
       {/* Image */}
       {blog.imageUrl && (
-        <div className="aspect-video overflow-hidden">
-          <img
-            src={blog.imageUrl}
-            alt={blog.title}
-            className="w-full h-58 object-cover transition-transform duration-300 group-hover:scale-105"
-            loading="lazy"
-          />
-        </div>
+        
+          <div className="image-anime aspect-video overflow-hidden">
+            <img
+              src={blog.imageUrl}
+              alt={blog.title}
+              className="w-full h-58 object-cover transition-transform duration-300 group-hover:scale-105"
+              loading="lazy"
+            />
+          </div>
       )}
 
       {/* Content */}
