@@ -262,16 +262,19 @@ export default function BlogDetail(){
             darkMode ? "bg-slate-800" : "bg-white"
           } rounded-2xl shadow-xl overflow-hidden`}
         >
-          {/* Hero Image */}
           {blog.imageUrl && (
-            <div className="aspect-video overflow-hidden">
-              <img
-                src={blog.imageUrl}
-                alt={blog.title}
-                className="w-full h-full object-cover"
-              />
+          <div className="relative aspect-video overflow-hidden">
+            <img
+              src={blog.imageUrl}
+              alt={blog.title}
+              className="w-full h-full object-cover"
+            />
+            {/* Image Credit Overlay */}
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
+              Image credit  :   <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer" className="underline">Pexels.com</a>
             </div>
-          )}
+          </div>
+        )}
 
           <div className="p-8 md:p-12">
             {/* Category and Meta Info */}

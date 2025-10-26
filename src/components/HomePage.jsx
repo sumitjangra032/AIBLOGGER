@@ -9,6 +9,7 @@ import {auth} from "../firebase";
 import HeroCarousel from "./HeroSection";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { startAutoRefresh } from "../services/refreshTimer";
 
 
 export default function HomePage({searchTerm}){
@@ -20,21 +21,27 @@ export default function HomePage({searchTerm}){
     const [selectedCategory, setSelectedCategory] = useState("all");
     const [showFilters, setShowFilters] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [, setRefreshing] = useState(false);
-    const [lastRefresh, setLastRefresh] = useState(new Date());
+    // const [, setRefreshing] = useState(false);
+    // const [lastRefresh, setLastRefresh] = useState(new Date());
     const [currentTime, setCurrentTime] = useState(new Date());
     const darkMode  = false;
+    const [lastRefresh, setLastRefresh] = useState(() => {
+    const saved = localStorage.getItem("lastRefresh");
+    const parsed = saved ? new Date(saved) : new Date();
+      return isNaN(parsed.getTime()) ? new Date() : parsed;  // ensure valid date
+    });
 
-    // Auto-refresh every hour
     useEffect(() => {
-    const interval = setInterval(
-      async () => {
-        await handleRefresh();
-      },
-      60 * 60 * 1000,
-    ); // 1 hour
-        return () => clearInterval(interval);
+      if (lastRefresh instanceof Date && !isNaN(lastRefresh.getTime())) {
+        localStorage.setItem("lastRefresh", lastRefresh.toISOString());
+      }
+    }, [lastRefresh]);
+
+
+    useEffect(() => {
+    startAutoRefresh(handleRefresh , setLastRefresh);
     }, []);
+
 
     useEffect(() => {
       const interval = setInterval(() => {
@@ -58,6 +65,7 @@ export default function HomePage({searchTerm}){
     useEffect(() => {
       AOS.refresh(); // re-initialize after data changes
     }, [filteredBlogs]);
+
 
     // Load initial blogs
     useEffect(() => {
@@ -110,7 +118,7 @@ export default function HomePage({searchTerm}){
 
 
     const handleRefresh = async () => {
-        setRefreshing(true);
+        // setRefreshing(true);
         try { 
         await blogService.generateBlogs(1);
         await blogService.cleanupOldBlogs();
@@ -120,9 +128,9 @@ export default function HomePage({searchTerm}){
       } catch (error) {
         console.error("Error refreshing blogs:", error);
         } 
-        finally {
-        setRefreshing(false);
-        }
+        // finally {
+        // setRefreshing(false);
+        // }
      };
 
      const handleBookmarkToggle = async (blogId) => {

@@ -9,7 +9,8 @@ import BookmarksPage from "./components/BookmarksPage";
 import HistoryPage from "./components/HistoryPage";
 import Footer from "./components/Footer";
 import AboutUs from "./components/AboutUs";
-
+import PrivacyPolicy from "./components/PrivacyPolicy";
+import TermsAndConditions from "./components/TermsandConditions";
 import ScrollToTop from './components/ScrollToTop';
 
 
@@ -36,6 +37,8 @@ function App() {
               <Route path="/AboutUs" element={<AboutUs />} />
               <Route path="/history" element={<HistoryPage />} />
               <Route path="/signin" element={<SignIn />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
             </Routes>
           </main>
           <Footer />

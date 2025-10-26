@@ -1,7 +1,7 @@
 
 import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Search, Cloud, User, Bookmark } from "lucide-react";
+import { Search, Cloud, User } from "lucide-react";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -113,15 +113,16 @@ export default function Header({ onSearch, searchTerm }){
                 Home
               </Link>
               <Link
-                to="/AboutUs"
-                className={`font-medium hover:text-opacity-80 transition-colors ${
-                  darkMode
-                    ? "text-slate-300 hover:text-blue-400"
-                    : "text-lg font-semibold text-white"
-                }`}
+              to="/bookmarks"
+              className={`font-medium hover:text-opacity-80 transition-colors ${
+                darkMode
+                  ? "text-slate-300 hover:text-blue-400"
+                  : "text-lg font-semibold text-white"
+              }`}
               >
-                About Us
+                Bookmarks
               </Link>
+              
               <Link
                 to="/history"
                 className={`font-medium hover:text-opacity-80 transition-colors ${
@@ -131,6 +132,17 @@ export default function Header({ onSearch, searchTerm }){
                 }`}
               >
                 History
+              </Link>
+
+              <Link
+                to="/AboutUs"
+                className={`font-medium hover:text-opacity-80 transition-colors ${
+                  darkMode
+                    ? "text-slate-300 hover:text-blue-400"
+                    : "text-lg font-semibold text-white"
+                }`}
+              >
+                About Us
               </Link>
             </nav>
 
@@ -149,7 +161,8 @@ export default function Header({ onSearch, searchTerm }){
                     <img
                       src={user.photoURL}
                       alt="Profile"
-                      className="w-6 h-6 rounded-full"
+                      referrerPolicy="no-referrer"
+                      className="w-8 h-8 rounded-full object-cover"
                     />
                   ) : (
                     <User
@@ -166,7 +179,7 @@ export default function Header({ onSearch, searchTerm }){
                         : "bg-white border-sky-200"
                     } py-2`}
                   >
-                    <Link
+                    {/* <Link
                       to="/bookmarks"
                       onClick={() => setShowUserMenu(false)}
                       className={`flex items-center px-4 py-2 text-sm hover:bg-opacity-80 transition-colors ${
@@ -177,7 +190,7 @@ export default function Header({ onSearch, searchTerm }){
                     >
                       <Bookmark className="w-4 h-4 mr-2" />
                       My Bookmarks
-                    </Link>
+                    </Link> */}
                     <button
                       onClick={handleSignOut}
                       className={`w-full text-left px-4 py-2 text-sm hover:bg-opacity-80 transition-colors ${

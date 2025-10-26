@@ -1,5 +1,7 @@
 import React from "react";
 import { FaYoutube, FaLinkedinIn, FaInstagram, FaGithub } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
 
 const categories = [
   "Technology",
@@ -19,7 +21,7 @@ const Footer = () => {
 
     return (
     <footer className="bg-[#0f172a] text-gray-300 py-12">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div className="max-w-5xl mx-auto px-5 grid grid-cols-4 md:grid-cols-4 gap-5">
         {/* Webapp / Brand Section */}
         <div>
           <h2 className="text-2xl font-bold text-white mb-3">StoryMint</h2>
@@ -72,14 +74,36 @@ const Footer = () => {
         </div>
 
         {/* Categories Section */}
-        <div>
+        <div className="mx-14">
           <h3 className="text-lg font-semibold text-white mb-4">Categories</h3>
-          <ul className="space-y-2 text-sm">
+          <ul className="space-y-1 text-sm">
             {categories.map((category, index) => (
               <React.Fragment key={category.id || index}>
                 {mycategory(category)}
               </React.Fragment>
             ))}
+          </ul>
+        </div>
+
+        {/* Legal Section */}
+        <div className="mx-5">
+          <h3 className="text-lg font-semibold text-white mb-4">Legal</h3>
+          <ul className="space-y-2 text-sm">
+            <li>
+              <Link
+                  to="/terms-and-conditions"
+                  className="hover:text-white transition">
+                  Terms & Conditions
+              </Link>
+            </li>
+            <li>
+              <Link
+                  to="/privacy-policy"
+                  className="hover:text-white transition">
+                  Privacy Policies
+              </Link>
+            </li>
+              
           </ul>
         </div>
 

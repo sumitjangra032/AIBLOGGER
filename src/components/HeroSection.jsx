@@ -197,10 +197,10 @@ const HeroCarousel = () => {
             />
             {/* Category overlay */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white px-4 py-2">
-            <h2 className="text-4xl font-bold mb-2">
+            <h2 className="text-4xl font-bold mb-2 bg-black bg-opacity-40 px-2 py-2 rounded">
                 {img.category[0].toUpperCase() + img.category.slice(1)}
             </h2>
-            <p className="text-lg font-medium text-white">
+            <p className="text-lg font-medium text-white bg-black bg-opacity-40 px-4 py-2 rounded">
                 {categories_quotes.find(cq => cq.name.toLowerCase() === img.category.toLowerCase())?.description || ""}
             </p>
             </div>
@@ -210,7 +210,7 @@ const HeroCarousel = () => {
       </div>
 
       {/* Controls */}
-      <div className="absolute inset-y-0 left-0 flex items-center">
+      <div className="absolute inset-y-0 left-0 flex items-center z-20">
         <button
           onClick={handlePrev}
           className="bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 ml-2"
@@ -219,7 +219,7 @@ const HeroCarousel = () => {
           &#10094;
         </button>
       </div>
-      <div className="absolute inset-y-0 right-0 flex items-center">
+      <div className="absolute inset-y-0 right-0 flex items-center z-20">
         <button
           onClick={handleNext}
           className="bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 mr-2"
@@ -230,7 +230,7 @@ const HeroCarousel = () => {
       </div>
 
       {/* Slide Indicators */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
         {images.map((_, index) => (
           <button
             key={index}
