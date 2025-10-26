@@ -1,19 +1,28 @@
 let timerId = null;
 let lastRefresh = Date.now();
 
+let REFRESH_BLOG_INTERVAL_MINUTES = 60;
+
+
+if (isNaN(REFRESH_BLOG_INTERVAL_MINUTES) || REFRESH_BLOG_INTERVAL_MINUTES <= 0) {
+  REFRESH_BLOG_INTERVAL_MINUTES = 60; // default to 60 minutes
+  console.log("inside if REFRESH_BLOG_INTERVAL_MINUTES:", REFRESH_BLOG_INTERVAL_MINUTES);
+
+}
+
 export const startAutoRefresh = async (handleRefresh, setLastRefresh) => {
   if (timerId) return;
 
-  const refreshInterval = 60 * 60 * 1000; // 1 hour
+  const refreshInterval = REFRESH_BLOG_INTERVAL_MINUTES * 60 * 1000; // 1 hour
+
+  console.log("Auto-refresh interval (ms):", refreshInterval);
 
   // Update state once at the start
   if (setLastRefresh) setLastRefresh(new Date());
 
-  console.log("Starting lastRefresh :", lastRefresh);
-
   const scheduleNext = async () => {
-    const now = Date.now();
-    const elapsed = now - lastRefresh;
+    
+    const elapsed = Date.now() - lastRefresh;
     console.log("Elapsed time since last refresh (ms):", elapsed);
     const delay = Math.max(refreshInterval - elapsed, 0);
     console.log("Scheduling next refresh in (ms):", delay);
@@ -22,10 +31,11 @@ export const startAutoRefresh = async (handleRefresh, setLastRefresh) => {
       await handleRefresh();
       
       setLastRefresh(new Date());
+      lastRefresh = Date.now();
 
-      console.log("Starting lastRefresh :", lastRefresh);
+      console.log("Starting lastRefresh in timer:",  Date.now());
 
-      scheduleNext(); // schedule the next refresh
+      scheduleNext(); 
     }, delay);
   };
 
