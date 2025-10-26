@@ -20,7 +20,8 @@ import {
 import { db } from "../firebase";
 import { BLOG_CATEGORIES } from "../types/blog";
 import { GoogleGenerativeAI } from '@google/generative-ai';
-;
+import { generateRandomAuthor } from "../services/AuthorName";
+
 
 function parseBlogText(text) {
   // Normalize spacing and newlines
@@ -37,10 +38,10 @@ function parseBlogText(text) {
   const title = getField('title');
   const content = getField('content');
   const tagsRaw = getField('tags');
-  const author = getField('author');
   const imageUrl = getField('imageUrl');
 
   const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
+  const author = generateRandomAuthor();
 
   return { category, title, content, tags, author, imageUrl };
 }
@@ -89,7 +90,6 @@ const generateAIBlog = async () => {
     - Include FAQs (at least 5) at the end related to the topic for SEO boost.
 
      tags: Add 5 to 10 SEO-relevant tags or keywords.
-     author: Use a realistic human author name.
 
     ---
 
@@ -99,19 +99,15 @@ const generateAIBlog = async () => {
      title: How to Use AI Tools to Automate Your Business in 2025 — The Complete Beginner’s Guide
      content: (Then the full 5000-word blog with headings, bold keywords, and short paragraphs)
      tags: AI, Automation, Business Tools, Productivity, Tech Trends
-     author: Rahul Sharma
-
+    
 
     “At the end, always output the final result in this exact text format (each field starts on a new line, labels in lowercase):
 
     category: <category name>  
     title: <title>  
     content: <blog content>  
-    tags: <comma-separated tags>  
-    author: <author name>  
-    imageUrl: <optional image link>  
-
-
+    tags: <comma-separated tags>   
+ 
     Do not include emojis, Markdown, or bullet symbols — only plain text in this format. Also Please dont repeat names authod always must be different names
     And also dont use Introduction words at starting of content
     `;
@@ -166,18 +162,6 @@ const generateAIBlog = async () => {
   }
 };
 
-// Helper function for fallback random author
-const generateRandomAuthor = () => {
-  const authors = [
-    "Aarav Mehta",
-    "Sophia Verma",
-    "Rohan Patel",
-    "Isabella Khan",
-    "Arjun Sharma",
-    "Maya Desai",
-  ];
-  return authors[Math.floor(Math.random() * authors.length)];
-};
 
 // Function to generate random image URL based on category
 const generateImageUrl = (category) => {

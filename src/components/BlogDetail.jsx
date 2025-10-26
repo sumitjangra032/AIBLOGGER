@@ -333,11 +333,19 @@ export default function BlogDetail(){
                       : "bg-slate-200 text-slate-700"
                   }`}
                 >
-                  {blog.author
+                  {/* {blog.author
                     .split(" ")
                     .map((n) => n[0])
-                    .join("")}
+                    .join("")} */}
+
+                  <img
+                    src={`/author_images/${blog.author}.jpg`}
+                    alt={blog.author}
+                    referrerPolicy="no-referrer"
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
                 </div>
+              
                 <div>
                   <div
                     className={`font-semibold ${darkMode ? "text-white" : "text-slate-900"}`}

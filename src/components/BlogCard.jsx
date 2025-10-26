@@ -174,9 +174,17 @@ export default function BlogCard({
                 darkMode ? "text-slate-300" : "text-slate-700"
               }`}
             >
-              <p className="text-sm text-gray-500">
-                By {blog.author}
-              </p>
+              <div className="flex items-center space-x-2">
+                <img
+                  src={`/author_images/${blog.author}.jpg`}
+                  alt={blog.author}
+                  referrerPolicy="no-referrer"
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+                <p className="text-sm text-gray-500">
+                  By {blog.author}
+                </p>
+                </div>
             </span>
             <div
               className={`flex items-center text-xs ${

@@ -1,0 +1,22 @@
+const fs = require("fs");
+const path = require("path");
+
+// Path to public/author_images (from src/scripts)
+const folderPath = path.join(__dirname, "../../public/author_images");
+
+// Read all .jpg files
+let files = fs.readdirSync(folderPath).filter((file) => file.endsWith(".jpg"));
+
+// Extract author names (remove .jpg)
+let authors = files.map((file) => file.replace(".jpg", ""));
+
+// Shuffle the array
+authors = authors.sort(() => Math.random() - 0.5);
+
+// Write to a JS file in src/utils/
+const outputPath = path.join(__dirname, "../utils/authorList.js");
+const content = `export const authors = ${JSON.stringify(authors, null, 2)};`;
+
+fs.writeFileSync(outputPath, content);
+
+console.log("✅ Author list generated and randomized successfully!");

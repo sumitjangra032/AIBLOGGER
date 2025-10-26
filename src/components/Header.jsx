@@ -151,7 +151,7 @@ export default function Header({ onSearch, searchTerm }){
               <div className="relative">
                 <button
                   onClick={() => setShowUserMenu(!showUserMenu)}
-                  className={`flex items-center space-x-2 p-2 rounded-full transition-colors duration-200 ${
+                  className={`flex items-center space-x-1 p-1 rounded-full transition-colors duration-200 ${
                     darkMode
                       ? "bg-slate-700 hover:bg-slate-600"
                       : "bg-sky-100 hover:bg-sky-200"
@@ -166,7 +166,7 @@ export default function Header({ onSearch, searchTerm }){
                     />
                   ) : (
                     <User
-                      className={`w-5 h-5 ${darkMode ? "text-slate-300" : "text-slate-600"}`}
+                      className={`w-8 h-8 ${darkMode ? "text-slate-300" : "text-slate-600"}`}
                     />
                   )}
                 </button>
