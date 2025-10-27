@@ -9,7 +9,7 @@ import {auth} from "../firebase";
 import HeroCarousel from "./HeroSection";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { startAutoRefresh } from "../services/refreshTimer";
+import { startAutoRefresh,stopAutoRefresh } from "../services/refreshTimer";
 
 
 export default function HomePage({searchTerm}){
@@ -36,11 +36,6 @@ export default function HomePage({searchTerm}){
         localStorage.setItem("lastRefresh", lastRefresh.toISOString());
       }
     }, [lastRefresh]);
-
-
-    useEffect(() => {
-    startAutoRefresh(handleRefresh , setLastRefresh);
-    }, []);
 
 
     useEffect(() => {
@@ -117,21 +112,25 @@ export default function HomePage({searchTerm}){
     }, [blogs, searchTerm, selectedCategory]);
 
 
-    const handleRefresh = async () => {
-        // setRefreshing(true);
-        try { 
+     const handleRefresh = async () => {
+      console.log("🔄 handleRefresh() called!");
+      try { 
         await blogService.generateBlogs(1);
         await blogService.cleanupOldBlogs();
 
-        setLastRefresh(new Date());
-        console.log("Blogs refreshed at inside the HandleRefresh ", new Date());
-      } catch (error) {
-        console.error("Error refreshing blogs:", error);
+        console.log("✅ Blogs refreshed successfully.");
+
+        } catch (error) {
+          console.error("Error refreshing blogs:", error);
         } 
-        // finally {
-        // setRefreshing(false);
-        // }
-     };
+        await new Promise((res) => setTimeout(res, 1000));
+      };
+
+      useEffect(() => {
+        startAutoRefresh(handleRefresh, setLastRefresh);
+
+        return () => stopAutoRefresh();
+      }, []);
 
      const handleBookmarkToggle = async (blogId) => {
         if (!user) return;

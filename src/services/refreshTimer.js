@@ -1,50 +1,42 @@
-let timerId = null;
-let lastRefresh = Date.now();
+// src/utils/refreshTimer.js
 
-let REFRESH_BLOG_INTERVAL_MINUTES = 60;
+let refreshInterval = null;
+const HOUR_MS = 60 * 60 * 1000;
 
+/**
+ * Starts a global auto-refresh that calls `handleRefresh` every hour
+ * and updates React state via `setLastRefresh`.
+ */
+export function startAutoRefresh(handleRefresh, setLastRefresh) {
+  // Clear any old timer (prevents duplicates if component remounts)
+  if (refreshInterval) {
+    clearInterval(refreshInterval);
+  }
 
-if (isNaN(REFRESH_BLOG_INTERVAL_MINUTES) || REFRESH_BLOG_INTERVAL_MINUTES <= 0) {
-  REFRESH_BLOG_INTERVAL_MINUTES = 60; // default to 60 minutes
-  console.log("inside if REFRESH_BLOG_INTERVAL_MINUTES:", REFRESH_BLOG_INTERVAL_MINUTES);
+  // Set up hourly refresh
+  refreshInterval = setInterval(async () => {
+    console.log("⏰ Auto refresh triggered at", new Date().toLocaleTimeString());
 
+    try {
+      // Call your refresh logic (fetch data, reload, etc.)
+      await handleRefresh();
+
+      // Update the React state with the new time
+      setLastRefresh(new Date());
+      console.log("✅ lastRefresh updated:", new Date().toLocaleTimeString());
+    } catch (err) {
+      console.error("❌ Error in auto refresh:", err);
+    }
+  }, HOUR_MS); 
 }
 
-export const startAutoRefresh = async (handleRefresh, setLastRefresh) => {
-  if (timerId) return;
-
-  const refreshInterval = REFRESH_BLOG_INTERVAL_MINUTES * 60 * 1000; // 1 hour
-
-  console.log("Auto-refresh interval (ms):", refreshInterval);
-
-  // Update state once at the start
-  if (setLastRefresh) setLastRefresh(new Date());
-
-  const scheduleNext = async () => {
-    
-    const elapsed = Date.now() - lastRefresh;
-    console.log("Elapsed time since last refresh (ms):", elapsed);
-    const delay = Math.max(refreshInterval - elapsed, 0);
-    console.log("Scheduling next refresh in (ms):", delay);
-
-    timerId = setTimeout(async () => {
-      await handleRefresh();
-      
-      setLastRefresh(new Date());
-      lastRefresh = Date.now();
-
-      console.log("Starting lastRefresh in timer:",  Date.now());
-
-      scheduleNext(); 
-    }, delay);
-  };
-
-  scheduleNext();
-};
-
-export const stopAutoRefresh = () => {
-  if (timerId) {
-    clearTimeout(timerId);
-    timerId = null;
+/**
+ * Stops the global auto-refresh timer.
+ */
+export function stopAutoRefresh() {
+  if (refreshInterval) {
+    clearInterval(refreshInterval);
+    refreshInterval = null;
+    console.log("🛑 Auto refresh stopped.");
   }
-};
+}
