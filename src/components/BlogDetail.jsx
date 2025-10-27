@@ -337,13 +337,14 @@ export default function BlogDetail(){
                     .split(" ")
                     .map((n) => n[0])
                     .join("")} */}
-
-                  <img
-                    src={`/author_images/${blog.author}.jpg`}
-                    alt={blog.author}
-                    referrerPolicy="no-referrer"
-                    className="w-12 h-12 rounded-full object-cover"
-                  />
+                  <div className="profile-img">
+                    <img
+                      src={`/author_images/${blog.author}.jpg`}
+                      alt={blog.author}
+                      referrerPolicy="no-referrer"
+                      className="w-12 h-12 rounded-full object-cover"
+                    />
+                  </div>
                 </div>
               
                 <div>

@@ -107,7 +107,7 @@ export default function BlogCard({
         <div className="flex items-center justify-between mb-3">
           <span
             className={`px-3 py-1 text-xs font-semibold rounded-full ${
-              darkMode ? "bg-blue-900 text-blue-200" : "bg-sky-100 text-sky-700"
+              darkMode ? "bg-blue-900 text-blue-200" : "bg-slate-200 text-sky-700"
             }`}
           >
             {blog.category}
@@ -156,7 +156,7 @@ export default function BlogCard({
               className={`inline-flex items-center px-2 py-1 text-xs rounded-lg ${
                 darkMode
                   ? "bg-slate-700 text-slate-300"
-                  : "bg-slate-100 text-slate-600"
+                  : "bg-slate-200 text-slate-600"
               }`}
             >
               <Tag className="w-3 h-3 mr-1" />
@@ -174,13 +174,15 @@ export default function BlogCard({
                 darkMode ? "text-slate-300" : "text-slate-700"
               }`}
             >
-              <div className="flex items-center space-x-2">
-                <img
-                  src={`/author_images/${blog.author}.jpg`}
-                  alt={blog.author}
-                  referrerPolicy="no-referrer"
-                  className="w-10 h-10 rounded-full object-cover"
-                />
+              <div className="pie-wrap flex items-center space-x-2">
+                <div className="profile-img">
+                  <img
+                    src={`/author_images/${blog.author}.jpg`}
+                    alt={blog.author}
+                    referrerPolicy="no-referrer"
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                </div>
                 <p className="text-sm text-gray-500">
                   By {blog.author}
                 </p>

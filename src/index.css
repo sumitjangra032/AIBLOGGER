@@ -39,3 +39,110 @@ code {
   transition: all 400ms linear;
   background-color: transparent;
 }
+
+
+
+.profile-img {
+  position: relative;
+  width: 2.5rem; /* w-10 */
+  height: 2.5rem; /* h-10 */
+  border-radius: 50%;
+  display: inline-block;
+  transition: all 0.1s ease;
+  overflow: visible;
+}
+
+/* Create a rotating border using ::before */
+.profile-img::before {
+  content: "";
+  position: absolute;
+  inset: -3px; /* glow thickness */
+  border-radius: 50%;
+  background: conic-gradient(
+    #007bff,
+    #ff00ff,
+    #00ffff,
+    #007bff
+  );
+  z-index: 0;
+  transform: rotate(0deg);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Animate rotation on hover */
+.profile-img:hover::before {
+  opacity: 1;
+  animation: rotate-glow 1.5s linear infinite;
+}
+
+/* Keep image on top */
+.profile-img img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Rotation animation */
+@keyframes rotate-glow {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+.theme-btn1 {
+  display: inline-block;
+  border-radius: 999px;
+  border: none;
+  color: var(--vtc-text-white, #fff);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 16px;
+  padding: 12px 24px;
+  position: relative;
+  z-index: 3;
+  overflow: hidden;
+  transition: all 0.4s;
+}
+
+.theme-btn1::after {
+  transition: all 0.4s;
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 0%;
+  top: 0;
+  left: auto;
+  right: 0;
+  background-color: var(--vtc-text-black1, #000);
+  z-index: -1;
+  border-radius: 999px;
+}
+
+.theme-btn1::before {
+  transition: all 0.4s;
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: var(--vtc-bg-main1, #0ea5e9); /* fallback: sky-500 */
+  z-index: -2;
+  border-radius: 999px;
+}
+
+.theme-btn1:hover {
+  color: var(--vtc-text-white, #fff);
+}
+
+.theme-btn1:hover::after {
+  width: 100%;
+  transition: all 0.4s ease-in-out;
+  left: 0;
+  right: auto;
+}

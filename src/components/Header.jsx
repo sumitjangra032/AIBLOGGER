@@ -207,7 +207,7 @@ export default function Header({ onSearch, searchTerm }){
             ) : (
               <Link
                 to="/signin"
-                className={`px-4 py-2 rounded-full font-medium transition-colors duration-200 ${
+                className={`theme-btn1 px-4 py-2 rounded-full font-medium transition-colors duration-200 ${
                   darkMode
                     ? "bg-blue-600 hover:bg-blue-700 text-white"
                     : "bg-sky-500 hover:bg-sky-600 text-white"
