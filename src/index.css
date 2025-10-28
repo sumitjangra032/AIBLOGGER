@@ -38,9 +38,8 @@ code {
   height: 250%;
   transition: all 400ms linear;
   background-color: transparent;
+  opacity: 0;
 }
-
-
 
 .profile-img {
   position: relative;

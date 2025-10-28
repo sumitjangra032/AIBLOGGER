@@ -10,6 +10,8 @@ import HeroCarousel from "./HeroSection";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { startAutoRefresh,stopAutoRefresh } from "../services/refreshTimer";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "../firebase"; 
 
 
 export default function HomePage({searchTerm}){
@@ -25,24 +27,28 @@ export default function HomePage({searchTerm}){
     // const [lastRefresh, setLastRefresh] = useState(new Date());
     const [currentTime, setCurrentTime] = useState(new Date());
     const darkMode  = false;
-    const [lastRefresh, setLastRefresh] = useState(() => {
-    const saved = localStorage.getItem("lastRefresh");
-    const parsed = saved ? new Date(saved) : new Date();
-      return isNaN(parsed.getTime()) ? new Date() : parsed;  // ensure valid date
-    });
 
     useEffect(() => {
-      if (lastRefresh instanceof Date && !isNaN(lastRefresh.getTime())) {
-        localStorage.setItem("lastRefresh", lastRefresh.toISOString());
-      }
-    }, [lastRefresh]);
+      const fetchRefreshStatus = async () => {
+        const ref = doc(db, "meta", "refreshStatus");
+        const snap = await getDoc(ref);
+        if (snap.exists()) {
+          const data = snap.data();
+          setLastRefresh(data.lastRefresh.toDate());
+        }
+      };
 
+      fetchRefreshStatus();
+
+      const interval = setInterval(fetchRefreshStatus, 5 * 60 * 1000);
+      return () => clearInterval(interval);
+    }, []);
+      
 
     useEffect(() => {
-      const interval = setInterval(() => {
-        setCurrentTime(new Date());
-        console.log("Current time updated : ", new Date());
-      }, 60000); // every minute
+    const interval = setInterval(() => setCurrentTime(new Date()), 60000);
+    return () => clearInterval(interval);
+  }, [])
 
       return () => clearInterval(interval);
     }, []);
@@ -91,12 +97,10 @@ export default function HomePage({searchTerm}){
     useEffect(() => {
         let filtered = blogs;
 
-        // Filter by category
         if (selectedCategory !== "all") {
         filtered = filtered.filter((blog) => blog.category === selectedCategory);
         }
 
-        // Filter by search term
         if (searchTerm.trim()) {
         const term = searchTerm.toLowerCase();
         filtered = filtered.filter(
@@ -163,21 +167,16 @@ export default function HomePage({searchTerm}){
     };
 
     const formatLastRefresh = () => {
-    console.log("lastRefresh : and currentTime ", lastRefresh.getTime(), currentTime.getTime());
-
+    if (!lastRefresh) return "Loading...";
     const diff = currentTime.getTime() - lastRefresh.getTime();
     const minutes = Math.floor(diff / 60000);
-
     if (minutes < 1) return "Just now";
     if (minutes < 60) return `${minutes}m ago`;
-
     const hours = Math.floor(minutes / 60);
     if (hours < 24) return `${hours}h ago`;
-
     const days = Math.floor(hours / 24);
-    console.log("minutes since last refresh: ", minutes);
     return `${days}d ago`;
-    };
+   };
 
     if (loading) 
     {

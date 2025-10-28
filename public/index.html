@@ -1,42 +1,209 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>StoryMint</title>
+    <meta name="title" content="StoryMint" />
     <meta
       name="description"
-      <!-- content="Web site created using create-react-app" -->
+      content="Explore fresh insights and inspiring content updated hourly. Browse AI-curated articles across technology, travel, lifestyle, and more."
     />
-    
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <!-- <link rel="manifest" href="%PUBLIC_URL%/manifest.json" /> -->
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+    <meta
+      name="keywords"
+      content="blog, articles, technology, travel, lifestyle, AI, fresh content"
+    />
+    <meta name="author" content="StoryMint" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>StoryMint</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://StoryMint.com/" />
+    <meta property="og:title" content="StoryMint" />
+    <meta
+      property="og:description"
+      content="Explore fresh insights and inspiring content updated hourly. Browse AI-curated articles across technology, travel, lifestyle, and more."
+    />
+    <meta property="og:image" content="https://StoryMint.com/og-image.jpg" />
+    <meta property="og:site_name" content="StoryMint" />
+    <meta property="og:locale" content="en_US" />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://StoryMint.com/" />
+    <meta
+      property="twitter:title"
+      content="StoryMint"
+    />
+    <meta
+      property="twitter:description"
+      content="Explore fresh insights and inspiring content updated hourly. Browse AI-curated articles across technology, travel, lifestyle, and more."
+    />
+    <meta
+      property="twitter:image"
+      content="https://StoryMint.com/og-image.jpg"
+    />
+    <meta property="twitter:creator" content="@StoryMint" />
+    <meta property="twitter:site" content="@StoryMint" />
+
+    <meta name="theme-color" content="#0ea5e9" />
+    <meta name="msapplication-TileColor" content="#0ea5e9" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#0ea5e9" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://images.unsplash.com" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json">
+      {
+        // Schema.org context for structured data
+        "@context": "https://schema.org",
+        // Website type for structured data
+        "@type": "WebSite",
+        // Website name
+        "name": "StoryMint",
+        // Website description
+        "description": "Discover amazing stories and fresh insights updated hourly",
+        // Website URL
+        "url": "https://StoryMint.com",
+        // Search action for site search
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://StoryMint.app/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        },
+        // Author organization
+        "author": {
+          "@type": "Organization",
+          "name": "StoryMint"
+        },
+        // Publisher organization with logo
+        "publisher": {
+          "@type": "Organization",
+          "name": "StoryMint",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://StoryMint.com/logo.png"
+          }
+        }
+      }
+    </script>
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="StoryMint" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="StoryMint" />
+
+    <link rel="dns-prefetch" href="//firebase.googleapis.com" />
+    <link rel="dns-prefetch" href="//firestore.googleapis.com" />
+    
+    <style>
+      #loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease-out;
+      }
+
+      .loading-content {
+        text-align: center;
+        color: #0369a1;
+      }
+
+      .loading-spinner {
+        width: 48px;
+        height: 48px;
+        border: 4px solid #e0f2fe;
+        border-top: 4px solid #0ea5e9;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 16px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @media (prefers-color-scheme: dark) {
+        #loading {
+          background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        }
+        .loading-content {
+          color: #e2e8f0;
+        }
+        .loading-spinner {
+          border-color: #334155;
+          border-top-color: #60a5fa;
+        }
+      }
+    </style>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="loading">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <h2
+          style="
+            font-family: &quot;Inter&quot;, sans-serif;
+            font-weight: 600;
+            margin: 0;
+            font-size: 1.5rem;
+          "
+        >
+          StoryMint
+        </h2>
+        <p
+          style="
+            font-family: &quot;Inter&quot;, sans-serif;
+            margin: 8px 0 0 0;
+            opacity: 0.8;
+          "
+        >
+          Loading amazing stories...
+        </p>
+      </div>
+    </div>
+
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+   
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <script>
+      window.addEventListener("load", function () {
+        setTimeout(function () {
+          const loading = document.getElementById("loading");
+          if (loading) {
+            loading.style.opacity = "0";
+            setTimeout(() => loading.remove(), 500);
+          }
+        }, 1000);
+      });
+    </script>
+
   </body>
 </html>

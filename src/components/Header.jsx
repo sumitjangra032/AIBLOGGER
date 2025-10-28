@@ -40,7 +40,7 @@ export default function Header({ onSearch, searchTerm }){
         darkMode
           ? "bg-slate-900/95 border-slate-700"
           : "bg-[#0f172a]"
-      } backdrop-blur-md border-b transition-colors duration-200`}
+      } backdrop-blur-md transition-colors duration-200`}
     >
       <div className="container mx-auto px-4 py-4">
         <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r bg-sky-500 rounded-full"

@@ -182,7 +182,7 @@ const HeroCarousel = () => {
       onTouchEnd={handleTouchEnd}
     >
       {/* Carousel wrapper */}
-      <div className="relative h-96 md:h-[800px] overflow-hidden rounded-lg pb-20">
+      <div className="relative h-96 md:h-[800px] overflow-hidden pb-20">
         {images.map((img, index) => (
           <div
             key={index}
