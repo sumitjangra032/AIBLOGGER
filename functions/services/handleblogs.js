@@ -1,24 +1,20 @@
-import {
-  collection,      // Reference to a collection
-  query,           // Create a query
-  orderBy,         // Order query results
-  limit,           // Limit number of results
-  onSnapshot,       // Real-time listener
-  where,           // Filter query results
-  getDocs,         // Get documents from query
-  addDoc,          // Add new document
-  deleteDoc,       // Delete document
-  doc,             // Reference to a document
-  updateDoc,       // Update document
-  increment,       // Increment field value
-  serverTimestamp, // Server timestamp
-  startAfter      // Pagination cursor
- // Document snapshot type
-} from "firebase/firestore";
-
+import { defineSecret } from "firebase-functions/params";
 import { db } from "../firebase.js";
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { generateRandomAuthor } from "./AuthorName.js";
+import { onInit }  from "firebase-functions/v2/core";
+import {FieldValue } from "firebase-admin/firestore";
+
+
+
+const GEMINI_KEY = defineSecret("GEMINI_API_KEY");
+
+let genAI;
+
+onInit(() => {
+  genAI = new GoogleGenerativeAI(GEMINI_KEY.value());
+})
+
 
 export const BLOG_CATEGORIES = [
   "Technology",
@@ -39,10 +35,8 @@ export const BLOG_CATEGORIES = [
 ];
 
 function parseBlogText(text) {
-  // Normalize spacing and newlines
   const cleanText = text.replace(/\r/g, '').trim();
 
-  // General flexible regex patterns
   const getField = (label) => {
     const regex = new RegExp(`${label}\\s*:\\s*([\\s\\S]*?)(?=\\n\\s*(?:category|title|content|tags|author|imageUrl)\\s*:|$)`, 'i');
     const match = cleanText.match(regex);
@@ -64,8 +58,9 @@ function parseBlogText(text) {
 
 const generateAIBlog = async () => {
   try {
-    const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINIAI_API_KEY);
+    
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    console.log("Generating blog with AI...",genAI);
 
     const categories = BLOG_CATEGORIES;
     const category = categories[Math.floor(Math.random() * categories.length)];
@@ -81,14 +76,14 @@ const generateAIBlog = async () => {
 
     2. Select the #1 trending topic in that category.
 
-    3. For that topic, create a 5000-word long-form blog post following these instructions:
+    3. For that topic, create a 5000-word on (How to do this/that topic) in long-form blog post following these instructions:
 
     ---
 
     ✍️ BLOG STRUCTURE & REQUIREMENTS
 
      category: ${category}
-     title: Create a catchy, click-worthy, SEO-optimized title (e.g., “How to Master X in 2025 — Step-by-Step Guide for Beginners”).
+     title: Create a catchy, click-worthy, SEO-optimized title (e.g., “How to do this in 2025 — Step-by-Step Guide for Beginners”).
      content:
     - Minimum 5000 words, written in a natural, human-like, conversational tone.
     - Must be SEO-optimized with proper keyword density, bolded keywords, and relevant LSI terms.
@@ -129,10 +124,14 @@ const generateAIBlog = async () => {
 
     const retries = 10;
     let structuredBlog = null;
+  
 
     for (let i = 0; i < retries; i++) {
       try {
+        
         const aiResponse = (await (await model.generateContent([prompt])).response).text();
+        console.log(" aiResponse:", aiResponse);
+
         structuredBlog = parseBlogText(aiResponse);
         console.log("✅ Parsed Blog:", structuredBlog);
         if (structuredBlog.title != null && structuredBlog.content != null){
@@ -148,6 +147,7 @@ const generateAIBlog = async () => {
         } else {
           throw err;
         }
+
       }
     }
 
@@ -166,7 +166,7 @@ const generateAIBlog = async () => {
       category,
       tags: tags || [],
       author: author || generateRandomAuthor(),
-      createdAt: serverTimestamp(),
+      createdAt: FieldValue.serverTimestamp(),
       views: 0,
       imageUrl: generateImageUrl(category),
     };
@@ -178,7 +178,6 @@ const generateAIBlog = async () => {
 };
 
 
-// Function to generate random image URL based on category
 const generateImageUrl = (category) => {
   
   const imageCounts = {
@@ -209,39 +208,31 @@ const generateImageUrl = (category) => {
 export const blogServiceNew = {
     generateBlogs: async (count = 12) => {
         const blogs = [];
-        for (let i = 0; i <= count; i++) {
+        for (let i = 0; i < count; i++) {
         const blog = await generateAIBlog();
-        const docRef = await addDoc(collection(db, "blogs"), blog);
+        const docRef = await db.collection("blogs").add(blog);
         blogs.push({ id: docRef.id, ...blog });
         }
         return blogs;
     },
 
     cleanupOldBlogs: async () => {
-    // Query to get the latest 100 blogs
-    const q = query(
-      collection(db, "blogs"),
-      orderBy("createdAt", "desc"),
-      limit(100),
-    );
+   
 
-    // Get the latest 100 blogs
-    const snapshot = await getDocs(q);
-    // Extract IDs of blogs to keep
+    const snapshot = await db
+            .collection("blogs")
+            .orderBy("createdAt", "desc")
+            .limit(100)
+            .get();
+
     const keepIds = snapshot.docs.map((doc) => doc.id);
 
-    // Query to get ALL blogs in the collection
-    const allBlogsQuery = query(collection(db, "blogs"));
-    const allSnapshot = await getDocs(allBlogsQuery);
+    const allSnapshot = await db.collection("blogs").get();
 
-    // Create array of delete promises for blogs not in the keep list
     const deletePromises = allSnapshot.docs
       .filter((doc) => !keepIds.includes(doc.id))
-      .map((doc) => deleteDoc(doc.ref));
-
-    // Execute all delete operations in parallel
+      .map((doc) => db.collection("blogs").doc(doc.id).delete());
     await Promise.all(deletePromises);
   }
-
 
 };

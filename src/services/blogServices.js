@@ -23,7 +23,7 @@ import { db } from "../firebase";
 export const blogService = {
   
     getLatestBlogs: (callback) => {
-    // Create query for blogs collection, ordered by creation date (newest first), limited to 10
+    // Create query for blogs collection, ordered by creation date (newest first)
     const q = query(
       collection(db, "blogs"),
       orderBy("createdAt", "desc"),

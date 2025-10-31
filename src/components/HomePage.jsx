@@ -10,7 +10,7 @@ import HeroCarousel from "./HeroSection";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { startAutoRefresh,stopAutoRefresh } from "../services/refreshTimer";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase"; 
 
 
@@ -24,7 +24,7 @@ export default function HomePage({searchTerm}){
     const [showFilters, setShowFilters] = useState(false);
     const [loading, setLoading] = useState(true);
     // const [, setRefreshing] = useState(false);
-    // const [lastRefresh, setLastRefresh] = useState(new Date());
+    const [lastRefresh, setLastRefresh] = useState(new Date());
     const [currentTime, setCurrentTime] = useState(new Date());
     const darkMode  = false;
 
@@ -36,7 +36,7 @@ export default function HomePage({searchTerm}){
           const data = snap.data();
           setLastRefresh(data.lastRefresh.toDate());
         }
-      };
+      }
 
       fetchRefreshStatus();
 
@@ -49,9 +49,6 @@ export default function HomePage({searchTerm}){
     const interval = setInterval(() => setCurrentTime(new Date()), 60000);
     return () => clearInterval(interval);
   }, [])
-
-      return () => clearInterval(interval);
-    }, []);
 
     useEffect(() => {
     AOS.init({

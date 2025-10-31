@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useParams, Link } from "react-router-dom";
+import RecommendedArticles from "./RecommendedArticles";
 import {
   ArrowLeft,
   Bookmark,
@@ -239,313 +240,330 @@ export default function BlogDetail(){
   return (
     <div
       className={`min-h-screen transition-colors duration-200 ${
-        darkMode ? "bg-slate-900" : "bg-gradient-to-br from-sky-50 to-blue-100"
+        darkMode ? "bg-slate-900" : "bg-white"
       }`}
     >
-      <div className="container mx-auto px-4 py-8">
-        {/* Back Button */}
-        <Link
-          to="/"
-          className={`inline-flex items-center mb-8 text-sm font-medium transition-colors duration-200 ${
-            darkMode
-              ? "text-slate-400 hover:text-blue-400"
-              : "text-slate-600 hover:text-sky-600"
-          }`}
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Home
-        </Link>
+      <div className="container mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-        {/* Article */}
-        <article
-          className={`max-w-4xl mx-auto ${
-            darkMode ? "bg-slate-800" : "bg-white"
-          } rounded-2xl shadow-xl overflow-hidden`}
-        >
-          {blog.imageUrl && (
-          <div className="relative aspect-video overflow-hidden">
-            <img
-              src={blog.imageUrl}
-              alt={blog.title}
-              className="w-full h-full object-cover"
-            />
-            {/* Image Credit Overlay */}
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
-              Image credit  :   <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer" className="underline">Pexels.com</a>
-            </div>
-          </div>
-        )}
 
-          <div className="p-8 md:p-12">
-            {/* Category and Meta Info */}
-            <div className="flex flex-wrap items-center gap-4 mb-6">
-              <span
-                className={`px-3 py-1 text-sm font-semibold rounded-full ${
-                  darkMode
-                    ? "bg-blue-900 text-blue-200"
-                    : "bg-sky-100 text-sky-700"
-                }`}
-              >
-                {blog.category}
-              </span>
-              <div
-                className={`flex items-center text-sm ${
-                  darkMode ? "text-slate-400" : "text-slate-500"
-                }`}
-              >
-                <Calendar className="w-4 h-4 mr-2" />
-                {formatDate(blog.createdAt)}
-              </div>
-              <div
-                className={`flex items-center text-sm ${
-                  darkMode ? "text-slate-400" : "text-slate-500"
-                }`}
-              >
-                <Clock className="w-4 h-4 mr-2" />
-                {calculateReadTime(blog.content)} min read
-              </div>
-              <div
-                className={`flex items-center text-sm ${
-                  darkMode ? "text-slate-400" : "text-slate-500"
-                }`}
-              >
-                <Eye className="w-4 h-4 mr-2" />
-                {blog.views || 0} views
+        <div className="lg:col-span-2">
+
+          {/* Article */}
+          <article
+            className={`max-w-4xl mx-auto ${
+              darkMode ? "bg-slate-800" : "bg-white"
+            } rounded-2xl  overflow-hidden`}
+          >
+            {blog.imageUrl && (
+            <div className="relative aspect-video overflow-hidden">
+              <img
+                src={blog.imageUrl}
+                alt={blog.title}
+                className="w-full h-full object-cover"
+              />
+              {/* Image Credit Overlay */}
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
+                Image credit  :   <a href="https://www.pexels.com" target="_blank" rel="noopener noreferrer" className="underline">Pexels.com</a>
               </div>
             </div>
+          )}
 
-            {/* Title */}
-            <h1
-              className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight ${
-                darkMode ? "text-white" : "text-slate-900"
-              }`}
-            >
-              {blog.title}
-            </h1>
-
-            {/* Author and Actions */}
-            <div className="flex items-center justify-between mb-8 pb-6 border-b border-opacity-20 border-slate-300">
-              <div className="flex items-center space-x-4">
+            <div className="p-8 md:p-12">
+              {/* Category and Meta Info */}
+              <div className="flex flex-wrap items-center gap-4 mb-6">
+                <span
+                  className={`px-3 py-1 text-sm font-semibold rounded-full ${
+                    darkMode
+                      ? "bg-blue-900 text-blue-200"
+                      : "bg-sky-100 text-sky-700"
+                  }`}
+                >
+                  {blog.category}
+                </span>
                 <div
-                  className={`w-12 h-12 rounded-full flex items-center justify-center font-semibold ${
-                    darkMode
-                      ? "bg-slate-700 text-slate-300"
-                      : "bg-slate-200 text-slate-700"
+                  className={`flex items-center text-sm ${
+                    darkMode ? "text-slate-400" : "text-slate-500"
                   }`}
                 >
-                  {/* {blog.author
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")} */}
-                  <div className="profile-img">
-                    <img
-                      src={`/author_images/${blog.author}.jpg`}
-                      alt={blog.author}
-                      referrerPolicy="no-referrer"
-                      className="w-12 h-12 rounded-full object-cover"
-                    />
-                  </div>
+                  <Calendar className="w-4 h-4 mr-2" />
+                  {formatDate(blog.createdAt)}
                 </div>
-              
-                <div>
-                  <div
-                    className={`font-semibold ${darkMode ? "text-white" : "text-slate-900"}`}
-                  >
-                    {blog.author}
-                  </div>
-                  <div
-                    className={`text-sm ${darkMode ? "text-slate-400" : "text-slate-500"}`}
-                  >
-                    Author
-                  </div>
+                <div
+                  className={`flex items-center text-sm ${
+                    darkMode ? "text-slate-400" : "text-slate-500"
+                  }`}
+                >
+                  <Clock className="w-4 h-4 mr-2" />
+                  {calculateReadTime(blog.content)} min read
+                </div>
+                <div
+                  className={`flex items-center text-sm ${
+                    darkMode ? "text-slate-400" : "text-slate-500"
+                  }`}
+                >
+                  <Eye className="w-4 h-4 mr-2" />
+                  {blog.views || 0} views
                 </div>
               </div>
 
-              <div className="flex items-center space-x-2 relative">
-                {/* Bookmark Button */}
-                <button
-                  onClick={handleBookmarkToggle}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
-                    isBookmarked
-                      ? darkMode
-                        ? "bg-yellow-600 text-yellow-100"
-                        : "bg-yellow-500 text-white"
-                      : darkMode
-                        ? "border border-slate-600 hover:bg-slate-700 text-slate-300"
-                        : "border border-slate-300 hover:bg-slate-50 text-slate-700"
-                  }`}
-                  disabled={!user}
-                >
-                  {isBookmarked ? (
-                    <BookmarkCheck className="w-4 h-4" />
-                  ) : (
-                    <Bookmark className="w-4 h-4" />
-                  )}
-                  <span className="hidden md:inline">
-                    {isBookmarked ? "Bookmarked" : "Bookmark"}
-                  </span>
-                </button>
-
-                {/* Share Button */}
-                <button
-                  onClick={() => setShowShareMenu(!showShareMenu)}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
-                    darkMode
-                      ? "border border-slate-600 hover:bg-slate-700 text-slate-300"
-                      : "border border-slate-300 hover:bg-slate-50 text-slate-700"
-                  }`}
-                >
-                  <Share className="w-4 h-4" />
-                  <span className="hidden md:inline">Share</span>
-                </button>
-
-                {/* Share Menu */}
-                {showShareMenu && (
-                  <div
-                    className={`absolute right-0 top-full mt-2 w-48 rounded-lg shadow-lg border z-10 ${
-                      darkMode
-                        ? "bg-slate-800 border-slate-600"
-                        : "bg-white border-sky-200"
-                    } py-2`}
-                  >
-                    <a
-                      href={shareUrls.twitter}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`flex items-center px-4 py-2 text-sm hover:bg-opacity-80 transition-colors ${
-                        darkMode
-                          ? "text-slate-300 hover:bg-slate-700"
-                          : "text-slate-700 hover:bg-sky-50"
-                      }`}
-                      onClick={() => setShowShareMenu(false)}
-                    >
-                      <Twitter className="w-4 h-4 mr-2" />
-                      Share on Twitter
-                    </a>
-                    <a
-                      href={shareUrls.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`flex items-center px-4 py-2 text-sm hover:bg-opacity-80 transition-colors ${
-                        darkMode
-                          ? "text-slate-300 hover:bg-slate-700"
-                          : "text-slate-700 hover:bg-sky-50"
-                      }`}
-                      onClick={() => setShowShareMenu(false)}
-                    >
-                      <Linkedin className="w-4 h-4 mr-2" />
-                      Share on LinkedIn
-                    </a>
-                    <a
-                      href={shareUrls.whatsapp}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`flex items-center px-4 py-2 text-sm hover:bg-opacity-80 transition-colors ${
-                        darkMode
-                          ? "text-slate-300 hover:bg-slate-700"
-                          : "text-slate-700 hover:bg-sky-50"
-                      }`}
-                      onClick={() => setShowShareMenu(false)}
-                    >
-                      <MessageCircle className="w-4 h-4 mr-2" />
-                      Share on WhatsApp
-                    </a>
-                    <button
-                      onClick={copyLink}
-                      className={`w-full text-left flex items-center px-4 py-2 text-sm hover:bg-opacity-80 transition-colors ${
-                        darkMode
-                          ? "text-slate-300 hover:bg-slate-700"
-                          : "text-slate-700 hover:bg-sky-50"
-                      }`}
-                    >
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      Copy Link
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Content */}
-            <div
-              className={`prose prose-lg max-w-none mb-8 ${
-                darkMode
-                  ? "prose-invert prose-headings:text-white prose-p:text-slate-300 prose-strong:text-white prose-blockquote:text-slate-300"
-                  : "prose-slate"
-              }`}
-            >
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {blog.content}
-              </ReactMarkdown>
-            </div>
-
-            {/* Tags */}
-            <div className="mb-8">
-              <h3
-                className={`text-lg font-semibold mb-3 ${
+              {/* Title */}
+              <h1
+                className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight ${
                   darkMode ? "text-white" : "text-slate-900"
                 }`}
               >
-                Tags
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {blog.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className={`inline-flex items-center px-3 py-1 text-sm rounded-full transition-colors ${
+                {blog.title}
+              </h1>
+
+              {/* Author and Actions */}
+              <div className="flex items-center justify-between mb-8 pb-6 border-b border-opacity-20 border-slate-300">
+                <div className="flex items-center space-x-4">
+                  <div
+                    className={`w-12 h-12 rounded-full flex items-center justify-center font-semibold ${
                       darkMode
-                        ? "bg-slate-700 text-slate-300 hover:bg-slate-600"
-                        : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                        ? "bg-slate-700 text-slate-300"
+                        : "bg-slate-200 text-slate-700"
                     }`}
                   >
-                    <Tag className="w-3 h-3 mr-1" />
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
+                    {/* {blog.author
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")} */}
+                    <div className="profile-img">
+                      <img
+                        src={`/author_images/${blog.author}.jpg`}
+                        alt={blog.author}
+                        referrerPolicy="no-referrer"
+                        className="w-12 h-12 rounded-full object-cover"
+                      />
+                    </div>
+                  </div>
+                
+                  <div>
+                    <div
+                      className={`font-semibold ${darkMode ? "text-white" : "text-slate-900"}`}
+                    >
+                      {blog.author}
+                    </div>
+                    <div
+                      className={`text-sm ${darkMode ? "text-slate-400" : "text-slate-500"}`}
+                    >
+                      Author
+                    </div>
+                  </div>
+                </div>
 
-            {/* Bottom Actions */}
-            <div
-              className={`flex items-center justify-between pt-8 border-t ${
-                darkMode ? "border-slate-700" : "border-slate-200"
-              }`}
-            >
+                <div className="flex items-center space-x-2 relative">
+                  {/* Bookmark Button */}
+                  <button
+                    onClick={handleBookmarkToggle}
+                    className={`theme-btn2 flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
+                      isBookmarked
+                        ? darkMode
+                          ? "bg-yellow-600 text-yellow-100"
+                          : "bg-yellow-500 text-white"
+                        : darkMode
+                          ? "border border-slate-600 hover:bg-slate-700 text-slate-300"
+                          : "border border-slate-300 hover:bg-slate-50 text-slate-700"
+                    }`}
+                    disabled={!user}
+                  >
+                    {isBookmarked ? (
+                      <BookmarkCheck className="w-4 h-4" />
+                    ) : (
+                      <Bookmark className="w-4 h-4" />
+                    )}
+                    <span className="hidden md:inline">
+                      {isBookmarked ? "Bookmarked" : "Bookmark"}
+                    </span>
+                  </button>
+
+                  {/* Share Button */}
+                  <button
+                    onClick={() => setShowShareMenu(!showShareMenu)}
+                    className={`theme-btn2 flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
+                      darkMode
+                        ? "border border-slate-600 hover:bg-slate-700 text-slate-300"
+                        : "border border-slate-300 hover:bg-slate-50 text-slate-700"
+                    }`}
+                  >
+                    <Share className="w-4 h-4" />
+                    <span className="hidden md:inline">Share</span>
+                  </button>
+
+                  {/* Share Menu */}
+                  {showShareMenu && (
+                    <div
+                      className={`absolute right-0 top-full mt-2 w-48 rounded-lg shadow-lg border z-10 ${
+                        darkMode
+                          ? "bg-slate-800 border-slate-600"
+                          : "bg-white border-sky-200"
+                      } py-2`}
+                    >
+                      <a
+                        href={shareUrls.twitter}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex items-center px-4 py-2 text-sm hover:bg-opacity-80 transition-colors ${
+                          darkMode
+                            ? "text-slate-300 hover:bg-slate-700"
+                            : "text-slate-700 hover:bg-sky-50"
+                        }`}
+                        onClick={() => setShowShareMenu(false)}
+                      >
+                        <Twitter className="w-4 h-4 mr-2" />
+                        Share on Twitter
+                      </a>
+                      <a
+                        href={shareUrls.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex items-center px-4 py-2 text-sm hover:bg-opacity-80 transition-colors ${
+                          darkMode
+                            ? "text-slate-300 hover:bg-slate-700"
+                            : "text-slate-700 hover:bg-sky-50"
+                        }`}
+                        onClick={() => setShowShareMenu(false)}
+                      >
+                        <Linkedin className="w-4 h-4 mr-2" />
+                        Share on LinkedIn
+                      </a>
+                      <a
+                        href={shareUrls.whatsapp}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex items-center px-4 py-2 text-sm hover:bg-opacity-80 transition-colors ${
+                          darkMode
+                            ? "text-slate-300 hover:bg-slate-700"
+                            : "text-slate-700 hover:bg-sky-50"
+                        }`}
+                        onClick={() => setShowShareMenu(false)}
+                      >
+                        <MessageCircle className="w-4 h-4 mr-2" />
+                        Share on WhatsApp
+                      </a>
+                      <button
+                        onClick={copyLink}
+                        className={`w-full text-left flex items-center px-4 py-2 text-sm hover:bg-opacity-80 transition-colors ${
+                          darkMode
+                            ? "text-slate-300 hover:bg-slate-700"
+                            : "text-slate-700 hover:bg-sky-50"
+                        }`}
+                      >
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Copy Link
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Content */}
               <div
-                className={`text-sm ${darkMode ? "text-slate-400" : "text-slate-500"}`}
+                className={`prose prose-lg max-w-none mb-8 ${
+                  darkMode
+                    ? "prose-invert prose-headings:text-white prose-p:text-slate-300 prose-strong:text-white prose-blockquote:text-slate-300"
+                    : "prose-slate"
+                }`}
               >
-                Published on {formatDate(blog.createdAt).split(" at ")[0]}
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {blog.content}
+                </ReactMarkdown>
               </div>
 
-              <div className="flex items-center space-x-4">
-                {!user && (
-                  <Link
-                    to="/signin"
-                    className={`text-sm font-medium transition-colors duration-200 ${
-                      darkMode
-                        ? "text-blue-400 hover:text-blue-300"
-                        : "text-sky-600 hover:text-sky-500"
-                    }`}
-                  >
-                    Sign in to bookmark
-                  </Link>
-                )}
-
-                <Link
-                  to="/"
-                  className={`inline-flex items-center px-4 py-2 rounded-lg transition-colors duration-200 ${
-                    darkMode
-                      ? "bg-slate-700 hover:bg-slate-600 text-slate-300"
-                      : "bg-slate-100 hover:bg-slate-200 text-slate-700"
+              {/* Tags */}
+              <div className="mb-8">
+                <h3
+                  className={`text-lg font-semibold mb-3 ${
+                    darkMode ? "text-white" : "text-slate-900"
                   }`}
                 >
-                  Read More Articles
-                </Link>
+                  Tags
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {blog.tags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className={`inline-flex items-center px-3 py-1 text-sm rounded-full transition-colors ${
+                        darkMode
+                          ? "bg-slate-700 text-slate-300 hover:bg-slate-600"
+                          : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                      }`}
+                    >
+                      <Tag className="w-3 h-3 mr-1" />
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Bottom Actions */}
+              <div
+                className={`flex items-center justify-between pt-8 border-t ${
+                  darkMode ? "border-slate-700" : "border-slate-200"
+                }`}
+              >
+                <div
+                  className={`text-sm ${darkMode ? "text-slate-400" : "text-slate-500"}`}
+                >
+                  Published on {formatDate(blog.createdAt).split(" at ")[0]}
+                </div>
+
+                <div className="flex items-center space-x-4">
+                  {!user && (
+                    <Link
+                      to="/signin"
+                      className={`text-sm font-medium transition-colors duration-200 ${
+                        darkMode
+                          ? "text-blue-400 hover:text-blue-300"
+                          : "text-sky-600 hover:text-sky-500"
+                      }`}
+                    >
+                      Sign in to bookmark
+                    </Link>
+                  )}
+
+                  <Link
+                    to="/"
+                    className={`theme-btn2 inline-flex items-center px-4 py-2 rounded-lg transition-colors duration-200 ${
+                      darkMode
+                        ? "bg-slate-700 hover:bg-slate-600 text-slate-300"
+                        : "bg-slate-100 hover:bg-slate-200 text-slate-700"
+                    }`}
+                  >
+                    Read More Articles
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        </article>
+            </article>
+        </div>
+
+        <aside className="lg:col-span-1 hidden lg:block sticky top-24">
+          <RecommendedArticles 
+            category={blog.category}
+            excludeId={blog.id}
+          />
+        </aside>
+          
       </div>
+
+      {/* Back Button */}
+      <div className="fixed top-20 left-20 z-50 py-10">
+          <Link
+            to="/"
+            className={`inline-flex items-center mb-8 text-sm font-medium transition-colors duration-200 ${
+              darkMode
+                ? "text-slate-400 hover:text-blue-400"
+                : "text-slate-600 hover:text-sky-600"
+            }`}
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Home
+          </Link>
+      </div>
+       
     </div>
+    
   );
 }
