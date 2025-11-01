@@ -1,8 +1,18 @@
 import React from "react";
 import { FaYoutube, FaLinkedinIn, FaInstagram, FaGithub } from "react-icons/fa";
+import { useStore } from "../services/store";
+import { useEffect } from "react";
+
 
 
 export default function AboutUs() {
+  const { setIsSearchDisabled } = useStore();
+
+  useEffect(() => {
+    setIsSearchDisabled(true);
+    return () => setIsSearchDisabled(false);
+  }, [setIsSearchDisabled]);
+
   const teamMembers = [
     {
       name: "Sumit Jangra",

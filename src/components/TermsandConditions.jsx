@@ -1,6 +1,18 @@
 import React from "react";
+import { useStore } from "../services/store";
+import { useEffect } from "react";
+
+
 
 export default function TermsAndConditions() {
+
+  const { setIsSearchDisabled } = useStore();
+
+  useEffect(() => {
+    setIsSearchDisabled(true);
+    return () => setIsSearchDisabled(false);
+  }, [setIsSearchDisabled]);
+
   return (
     <div className="h-full w-full bg-gradient-to-br from-sky-50 to-blue-100">
     <div className="max-w-4xl mx-auto px-6 py-16 text-slate-800 ">

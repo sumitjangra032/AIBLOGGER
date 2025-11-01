@@ -1,5 +1,16 @@
 import React from "react";
+import { useStore } from "../services/store";
+import { useEffect } from "react";
+
+
 export default function PrivacyPolicy() {
+  const { setIsSearchDisabled } = useStore();
+
+  useEffect(() => {
+    setIsSearchDisabled(true);
+    return () => setIsSearchDisabled(false);
+  }, [setIsSearchDisabled]);
+
   return (
     <div className="h-full w-full bg-gradient-to-br from-sky-50 to-blue-100">
 

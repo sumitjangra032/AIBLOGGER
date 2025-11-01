@@ -204,7 +204,7 @@ export default function HomePage({searchTerm}){
       <HeroCarousel />
       </div>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container w-full mx-auto px-4 py-8">
 
         {/* Controls */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 space-y-4 md:space-y-0">

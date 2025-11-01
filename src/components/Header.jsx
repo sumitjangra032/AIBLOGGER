@@ -5,6 +5,7 @@ import { Search, Cloud, User } from "lucide-react";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useStore } from "../services/store";
 
 
 export default function Header({ onSearch, searchTerm }){
@@ -12,6 +13,7 @@ export default function Header({ onSearch, searchTerm }){
   const [user] = useAuthState(auth);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [scrollWidth, setScrollWidth] = useState(0);
+  const { isSearchDisabled } = useStore();
 
   const handleSignOut = async () => {
     try {
@@ -79,6 +81,7 @@ export default function Header({ onSearch, searchTerm }){
                   darkMode ? "focus:ring-blue-400" : "focus:ring-sky-400"
                 }`}
               />
+              {isSearchDisabled && <div className="search-blocker"></div>}
             </div>
           </div>
 

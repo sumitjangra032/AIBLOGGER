@@ -78,7 +78,7 @@ export default function BlogCard({
 
   return (
     <article
-      className={`h-full group relative overflow-hidden rounded-2xl 
+      className={`h-full group bg-white relative overflow-hidden rounded-2xl 
         transition-all duration-300 
         shadow-md 
         hover:-translate-y-1 

@@ -15,6 +15,23 @@ onInit(() => {
   genAI = new GoogleGenerativeAI(GEMINI_KEY.value());
 })
 
+const defaultTags = {
+  Technology: ["AI", "Software", "Gadgets", "Cybersecurity", "Innovation"],
+  Travel: ["Destinations", "Tips", "Hotels", "Adventure", "Budget Travel"],
+  Lifestyle: ["Self-care", "Home", "Minimalism", "Motivation", "Relationships"],
+  Business: ["Startups", "Finance", "Marketing", "Leadership", "Investing"],
+  Health: ["Fitness", "Nutrition", "Mental Health", "Wellness", "Medicine"],
+  Science: ["Space", "Biology", "Physics", "Research", "Discoveries"],
+  Entertainment: ["Movies", "TV Shows", "Celebrities", "Music", "Reviews"],
+  Sports: ["Football", "Cricket", "Fitness", "Tournaments", "Highlights"],
+  Food: ["Recipes", "Restaurants", "Vegan", "Desserts", "Street Food"],
+  Fashion: ["Trends", "Outfits", "Styling", "Brands", "Accessories"],
+  Crypto: ["Bitcoin", "Blockchain", "NFT", "Trading", "Web3"],
+  Education: ["Learning", "Courses", "Career", "Study Tips", "Skill Development"],
+  Environment: ["Climate", "Pollution", "Sustainability", "Nature", "Energy"],
+  Politics: ["Elections", "Government", "Policies", "World Affairs", "Debate"],
+  Art: ["Painting", "Photography", "Design", "Culture", "Creativity"],
+};
 
 export const BLOG_CATEGORIES = [
   "Technology",
@@ -49,7 +66,8 @@ function parseBlogText(text) {
   const tagsRaw = getField('tags');
   const imageUrl = getField('imageUrl');
 
-  const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
+  const raw = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
+  const tags = raw > 0 ? raw : defaultTags[category];
   const author = generateRandomAuthor();
 
   return { category, title, content, tags, author, imageUrl };
