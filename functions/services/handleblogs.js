@@ -101,7 +101,7 @@ const generateAIBlog = async () => {
     ✍️ BLOG STRUCTURE & REQUIREMENTS
 
      category: ${category}
-     title: Create a catchy, click-worthy, SEO-optimized title (e.g., “How to do this in 2025 — Step-by-Step Guide for Beginners”).
+     title: Create a catchy, click-worthy, SEO-optimized title (e.g., “How to do this — Step-by-Step Guide for Beginners”).
      content:
     - Minimum 5000 words, written in a natural, human-like, conversational tone.
     - Must be SEO-optimized with proper keyword density, bolded keywords, and relevant LSI terms.
@@ -124,7 +124,7 @@ const generateAIBlog = async () => {
      OUTPUT FORMAT EXAMPLE
 
      category: Technology
-     title: How to Use AI Tools to Automate Your Business in 2025 — The Complete Beginner’s Guide
+     title: How to Use AI Tools to Automate Your Business — The Complete Beginner’s Guide
      content: (Then the full 5000-word blog with headings, bold keywords, and short paragraphs)
      tags: AI, Automation, Business Tools, Productivity, Tech Trends
     

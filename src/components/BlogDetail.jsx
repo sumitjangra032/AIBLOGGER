@@ -4,6 +4,8 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useParams, Link } from "react-router-dom";
 import RecommendedArticles from "./RecommendedArticles";
+import { useStore } from "../services/store";
+
 import {
   ArrowLeft,
   Bookmark,
@@ -34,6 +36,13 @@ export default function BlogDetail(){
   const [bookmarks, setBookmarks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showShareMenu, setShowShareMenu] = useState(false);
+
+  const { setIsSearchDisabled } = useStore();
+
+  useEffect(() => {
+    setIsSearchDisabled(true);
+    return () => setIsSearchDisabled(false);
+  }, [setIsSearchDisabled]);
 
   useEffect(() => {
     if (id) {
@@ -546,23 +555,7 @@ export default function BlogDetail(){
           />
         </aside>
           
-      </div>
-
-      {/* Back Button */}
-      <div className="fixed top-20 left-20 z-50 py-10">
-          <Link
-            to="/"
-            className={`inline-flex items-center mb-8 text-sm font-medium transition-colors duration-200 ${
-              darkMode
-                ? "text-slate-400 hover:text-blue-400"
-                : "text-slate-600 hover:text-sky-600"
-            }`}
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Home
-          </Link>
-      </div>
-       
+      </div>     
     </div>
     
   );
