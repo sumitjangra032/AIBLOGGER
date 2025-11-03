@@ -72,8 +72,8 @@ export default function AboutUs() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-4 py-16">
-        <h2 className="text-center text-2xl md:text-4xl font-semibold mb-10">
+      <section className="max-w-6xl mx-auto px-4 py-16 ">
+        <h2 className="text-center text-2xl md:text-4xl font-semibold mb-10 ">
           Meet Our Team
         </h2>
 

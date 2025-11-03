@@ -66,8 +66,10 @@ function parseBlogText(text) {
   const tagsRaw = getField('tags');
   const imageUrl = getField('imageUrl');
 
-  const raw = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
-  const tags = raw > 0 ? raw : defaultTags[category];
+  const raw = tagsRaw ? tagsRaw.split(",").map(t => t.trim()).filter(Boolean) : [];
+  const isValid = raw.length > 0 && !raw.some(t => t.length > 20);
+  const tags = isValid ? raw : defaultTags[category];
+
   const author = generateRandomAuthor();
 
   return { category, title, content, tags, author, imageUrl };

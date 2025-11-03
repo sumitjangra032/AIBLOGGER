@@ -2,10 +2,19 @@ import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { Cloud, LogIn } from "lucide-react";
+import { useEffect } from "react";
+import { useStore } from "../services/store";
 
 function SignIn(){
   const { darkMode } = false;
   const navigate = useNavigate();
+
+  const { setIsSearchDisabled } = useStore();
+  
+    useEffect(() => {
+      setIsSearchDisabled(true);
+      return () => setIsSearchDisabled(false);
+    }, [setIsSearchDisabled]);
 
   const handleGoogleSignIn = async () => {
     try {

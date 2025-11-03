@@ -45,10 +45,10 @@ export default function HamburgerMenu() {
               initial={{ x: 260 }}
               animate={{ x: 0 }}
               exit={{ x: 260 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 ,duration: 0.1}}
               className="fixed top-0 right-0 z-40 h-full w-64 bg-[#0f172a] mt-14 shadow-1xl flex flex-col"
+              onClick={() => setOpen(false)}
             >
-
               <ul className="flex-1 space-y-0 text-white bg-[#0f172a]">
                 <li>
                   <Link

@@ -46,23 +46,24 @@ export default function Header({ onSearch, searchTerm }){
           : "bg-[#0f172a]"
       } backdrop-blur-md transition-colors duration-200`}
     >
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-2 py-4">
         <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r bg-sky-500 rounded-full"
            style={{ width: `${scrollWidth}%`, transition: "width 0.2s ease-out" }} />
-        <div className="flex flex-row justify-between">
-          <div className="relative flex items-center">          
+        <div className="flex items-center justify-between w-full gap-4">        
             {/* Logo */}
-            <Link to="/" className="flex items-center space-x-2">
-              <Cloud
-                className={`w-8 h-8 ${darkMode ? "text-blue-400" : "text-sky-500"}`}
-              />
-              <h1
-                className={`text-2xl font-bold ${darkMode ? "text-white" : "text-white"}`}
-              >
-                StoryMint
-              </h1>
-            </Link>
+            <div className="flex items-center space-x-2"                >
+              <Link to="/" className="flex items-center space-x-2">
+                <Cloud
+                  className={`w-8 h-8 ${darkMode ? "text-blue-400" : "text-sky-500"}`}
+                />
+                <h1
+                  className={`text-2xl font-bold ${darkMode ? "text-white" : "text-white"}`}
+                >
+                  StoryMint
+                </h1>
+              </Link>
 
+            </div>
             {/* Search Bar on desktop*/}
             <div className="hidden md:block flex-1 max-w-2xl mx-8">
               <div className="relative">
@@ -89,7 +90,7 @@ export default function Header({ onSearch, searchTerm }){
             </div>
           
             {/* Right Side Controls */}
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-4 content-right">
               {/* Theme Toggle
               <button
                 onClick={toggleDarkMode}
@@ -211,14 +212,13 @@ export default function Header({ onSearch, searchTerm }){
                 </Link>
               )}
             </div>
-          </div>
-          <div className="flex flex-row">
+
+            <div className="flex flex-row block md:hidden">
             {/* SEARCH (Mobile icon) */}
-            <MobileSearch />
+              <MobileSearch searchTerm={searchTerm} onSearch={onSearch} isSearchDisabled={isSearchDisabled} 
+              />
             {/* Mobile Menu */}
-            <div className="md:hidden">
               <HamburgerMenu />
-            </div>
           </div>
         </div>
       </div>

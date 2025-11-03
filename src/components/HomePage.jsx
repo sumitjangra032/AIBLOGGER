@@ -167,7 +167,7 @@ export default function HomePage({searchTerm}){
 
       <div className="container max-w-6xl mx-auto px-4 py-4 sm:py-6">
 
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+        <div className="flex flex-row md:flex-row justify-between items-start md:items-center mb-6 gap-4">
           <div className="w-full md:w-auto flex items-center justify-between md:justify-start gap-4">
             <button
               onClick={() => setShowFilters(!showFilters)}
@@ -183,9 +183,9 @@ export default function HomePage({searchTerm}){
             </button>
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex-row text-xs/5 items-center space-x-4">
             <span className={`text-sm ${darkMode ? "text-slate-400" : "text-slate-500"}`}>
-              Last updated: {formatLastRefresh()}
+              Last updated : {formatLastRefresh()}
             </span>
           </div>
         </div>
