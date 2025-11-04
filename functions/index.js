@@ -7,9 +7,7 @@ import { FieldValue } from "firebase-admin/firestore";
 import { blogServiceNew } from "./services/handleblogs.js";
 import { db } from "./firebase.js";
 
-export const refreshBlogs = onSchedule("every 60 minutes",async () => {
-    console.log("🔄 Running blog refresh...");
-
+export const refreshBlogs = onSchedule("every 120 minutes",async () => {
     try {
       await blogServiceNew.generateBlogs(1);
 
@@ -17,7 +15,6 @@ export const refreshBlogs = onSchedule("every 60 minutes",async () => {
         lastRefresh: FieldValue.serverTimestamp(),
       });
 
-      console.log("✅ Blogs refreshed at", new Date().toISOString());
     } catch (err) {
       console.error("❌ Error refreshing blogs:", err);
     }

@@ -252,7 +252,7 @@ export default function BlogDetail(){
         darkMode ? "bg-slate-900" : "bg-white"
       }`}
     >
-      <div className="container mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="container mx-auto text-left py-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
 
 
         <div className="lg:col-span-2">
@@ -268,7 +268,7 @@ export default function BlogDetail(){
               <img
                 src={blog.imageUrl}
                 alt={blog.title}
-                className="w-full h-full object-cover"
+                className="px-5 w-full h-full object-cover"
               />
               {/* Image Credit Overlay */}
               <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
@@ -277,7 +277,7 @@ export default function BlogDetail(){
             </div>
           )}
 
-            <div className="p-8 md:p-12">
+            <div className="p-5 md:py-12 md:mr-10">
               {/* Category and Meta Info */}
               <div className="flex flex-wrap items-center gap-4 mb-6">
                 <span
@@ -325,7 +325,7 @@ export default function BlogDetail(){
               </h1>
 
               {/* Author and Actions */}
-              <div className="flex items-center justify-between mb-8 pb-6 border-b border-opacity-20 border-slate-300">
+              <div className="flex items-center justify-between  mt-8 pb-6 border-b border-opacity-20 border-slate-300">
                 <div className="flex items-center space-x-4">
                   <div
                     className={`w-12 h-12 rounded-full flex items-center justify-center font-semibold ${
@@ -513,16 +513,16 @@ export default function BlogDetail(){
                 }`}
               >
                 <div
-                  className={`text-sm ${darkMode ? "text-slate-400" : "text-slate-500"}`}
+                  className={`text-sm mr-2 ${darkMode ? "text-slate-400" : "text-slate-500"}`}
                 >
                   Published on {formatDate(blog.createdAt).split(" at ")[0]}
                 </div>
 
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-10 md:space-x-4">
                   {!user && (
                     <Link
                       to="/signin"
-                      className={`text-sm font-medium transition-colors duration-200 ${
+                      className={`flex items-center text-sm font-medium transition-colors duration-200 mb-9 md:flex items-center text-sm pt-10 font-medium transition-colors duration-200 ${
                         darkMode
                           ? "text-blue-400 hover:text-blue-300"
                           : "text-sky-600 hover:text-sky-500"
@@ -534,7 +534,7 @@ export default function BlogDetail(){
 
                   <Link
                     to="/"
-                    className={`theme-btn2 inline-flex items-center px-4 py-2 rounded-lg transition-colors duration-200 ${
+                    className={`transition-colors duration-200 md: rounded-lg px-3 py-2 ${
                       darkMode
                         ? "bg-slate-700 hover:bg-slate-600 text-slate-300"
                         : "bg-slate-100 hover:bg-slate-200 text-slate-700"

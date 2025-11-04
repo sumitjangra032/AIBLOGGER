@@ -83,7 +83,15 @@ const generateAIBlog = async () => {
     console.log("Generating blog with AI...",genAI);
 
     const categories = BLOG_CATEGORIES;
+    
     const category = categories[Math.floor(Math.random() * categories.length)];
+
+    const snap = await db
+      .collection("blogs")
+      .where("category", "==", category)
+      .get()
+
+    const existingTitles = snap.docs.map(doc => doc.data().excerpt)
 
     const prompt = `
     You are an expert AI content researcher, SEO strategist, and blog writer.
@@ -96,15 +104,21 @@ const generateAIBlog = async () => {
 
     2. Select the #1 trending topic in that category.
 
-    3. For that topic, create a 5000-word on (How to do this/that topic) in long-form blog post following these instructions:
+    3. Create a long-form blog (5000 words minimum) on **how to perform / apply / execute this topic**.
 
     ---
 
     ✍️ BLOG STRUCTURE & REQUIREMENTS
 
-     category: ${category}
-     title: Create a catchy, click-worthy, SEO-optimized title (e.g., “How to do this — Step-by-Step Guide for Beginners”).
-     content:
+      category: ${category}
+      Existing topics:
+      ${existingTitles.join("\n")}
+
+      Generate a new blog topic + content that is NOT similar to any listed above.
+      Stay within the same category.
+
+      title: Create a catchy, click-worthy, SEO-optimized title 
+    content:
     - Minimum 5000 words, written in a natural, human-like, conversational tone.
     - Must be SEO-optimized with proper keyword density, bolded keywords, and relevant LSI terms.
     - Include the following structure:
@@ -230,10 +244,20 @@ export const blogServiceNew = {
         const blogs = [];
         for (let i = 0; i < count; i++) {
         const blog = await generateAIBlog();
-        const docRef = await db.collection("blogs").add(blog);
-        blogs.push({ id: docRef.id, ...blog });
+
+        if (!blog || typeof blog !== "object" || Array.isArray(blog)) {
+          console.error("invalid blog returned")
+          continue
+        }
+
+        const clean = JSON.parse(JSON.stringify(blog))
+
+        const docRef = await db.collection("blogs").add(clean)
+
+        blogs.push({ id: docRef.id, ...clean })
         }
         return blogs;
+
     },
 
     cleanupOldBlogs: async () => {

@@ -20,19 +20,23 @@ const Footer = () => {
     }
 
     return (
-    <footer className="bg-[#0f172a] text-gray-300 py-12">
-        <div className="text-center flex justify-center flex-col gap-8 md:flex-row gap-10">
+    <footer className="bg-[#0f172a] text-gray-300 py-12 ">
+        <div className="text-center flex justify-center flex-col gap-8 md:flex-row md:gap-20 md:justify-center md:text-left">
           {/* Webapp / Brand Section */}
           <div>
             <h2 className="text-2xl font-bold text-white mb-3">StoryMint</h2>
-            <p className="text-sm text-wrap">
+            <p className="
+              text-sm text-pretty mb-4
+              px-8
+              md:px-0
+              md:text-left
+              md:max-w-[350px]
+            ">
               StoryMint is your hub for the latest in digital innovation, AI, and creative insights .
-              </p> 
-            <p className="text-sm text-wrap mb-4">
               Empowering creators and businesses with valuable resources and inspiration.
             </p>
 
-            <div className="flex justify-center gap-4">
+            <div className="flex justify-center gap-4 md:justify-start">
               <a
                   href="https://www.linkedin.com/in/sumit-jangra-765b7024a/"
                   target="_blank"

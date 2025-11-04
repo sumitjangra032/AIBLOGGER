@@ -8,6 +8,8 @@ import BlogCard from "./BlogCard";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 // import { DocumentSnapshot } from "firebase/firestore";
+import { useStore } from "../services/store";
+
 
 export default function HistoryPage(){
   const darkMode = false;
@@ -22,6 +24,13 @@ export default function HistoryPage(){
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [dateFilter, setDateFilter] = useState("all");
+
+  const { setIsSearchDisabled } = useStore();
+
+  useEffect(() => {
+    setIsSearchDisabled(true);
+    return () => setIsSearchDisabled(false);
+  }, [setIsSearchDisabled]);
 
   useEffect(() => {
     loadInitialBlogs();
