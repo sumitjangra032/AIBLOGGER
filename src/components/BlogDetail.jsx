@@ -252,14 +252,13 @@ export default function BlogDetail(){
         darkMode ? "bg-slate-900" : "bg-white"
       }`}
     >
-      <div className="container mx-auto text-left py-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
-
+      <div className="container mx-auto text-left py-10 grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         <div className="lg:col-span-2">
 
           {/* Article */}
           <article
-            className={`max-w-4xl mx-auto ${
+            className={`max-w-4xl ml-20 ${
               darkMode ? "bg-slate-800" : "bg-white"
             } rounded-2xl  overflow-hidden`}
           >

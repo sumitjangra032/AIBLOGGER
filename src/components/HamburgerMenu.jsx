@@ -6,24 +6,24 @@ export default function HamburgerMenu() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="relative bg-[#0f172a]">
+    <div className="relative bg-white">
       <button
         aria-label={open ? "Close menu" : "Open menu"}
         onClick={() => setOpen((s) => !s)}
         className="z-40 relative w-10 h-10 flex items-center justify-center focus:outline-none"
       >
         <motion.span
-          className="block absolute w-6 h-[2px] rounded bg-white"
+          className="block absolute w-6 h-[2px] rounded bg-orange-500"
           animate={open ? { rotate: 45, y: 0 } : { rotate: 0, y: -6 }}
           transition={{ type: "spring", stiffness: 380, damping: 30 }}
         />
         <motion.span
-          className="block absolute w-6 h-[2px] rounded bg-white"
+          className="block absolute w-6 h-[2px] rounded bg-orange-500"
           animate={open ? { opacity: 0 } : { opacity: 1 }}
           transition={{ duration: 0.12 }}
         />
         <motion.span
-          className="block absolute w-6 h-[2px] rounded bg-white"
+          className="block absolute w-6 h-[2px] rounded bg-orange-500"
           animate={open ? { rotate: -45, y: 0 } : { rotate: 0, y: 6 }}
           transition={{ type: "spring", stiffness: 380, damping: 30 }}
         />
@@ -46,10 +46,10 @@ export default function HamburgerMenu() {
               animate={{ x: 0 }}
               exit={{ x: 260 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 ,duration: 0.1}}
-              className="fixed top-0 right-0 z-40 h-full w-64 bg-[#0f172a] mt-14 shadow-1xl flex flex-col"
+              className="fixed top-0 right-0 z-40 h-full w-64 bg-orange-500 mt-14 shadow-1xl flex flex-col"
               onClick={() => setOpen(false)}
             >
-              <ul className="flex-1 space-y-0 text-white bg-[#0f172a]">
+              <ul className="flex-1 space-y-0 text-orange-500 bg-white">
                 <li>
                   <Link
                     to="/"

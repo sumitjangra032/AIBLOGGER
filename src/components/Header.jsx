@@ -1,20 +1,19 @@
-
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Search, Cloud, User } from "lucide-react";
+import { Search, Cloud, User, X } from "lucide-react";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useStore } from "../services/store";
 import HamburgerMenu from "./HamburgerMenu";
-import MobileSearch from "./MobilSearch";
+// import MobileSearch from "./MobilSearch";
 
-
-export default function Header({ onSearch, searchTerm }){
-  const darkMode = false;
+export default function Header({ onSearch, searchTerm }) {
+  // const darkMode = false;
   const [user] = useAuthState(auth);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [scrollWidth, setScrollWidth] = useState(0);
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
   const { isSearchDisabled } = useStore();
 
   const handleSignOut = async () => {
@@ -26,7 +25,15 @@ export default function Header({ onSearch, searchTerm }){
     }
   };
 
-    useEffect(() => {
+  const handleSearchToggle = () => {
+    setShowMobileSearch(!showMobileSearch);
+  };
+
+  const handleSearchChange = (e) => {
+    onSearch(e.target.value);
+  };
+
+  useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       const docHeight = document.body.scrollHeight - window.innerHeight;
@@ -39,190 +46,190 @@ export default function Header({ onSearch, searchTerm }){
   }, []);
 
   return (
-    <header
-      className={`sticky top-0 z-50 ${
-        darkMode
-          ? "bg-slate-900/95 border-slate-700"
-          : "bg-[#0f172a]"
-      } backdrop-blur-md transition-colors duration-200`}
-    >
-      <div className="container mx-auto px-2 py-4">
-        <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r bg-sky-500 rounded-full"
-           style={{ width: `${scrollWidth}%`, transition: "width 0.2s ease-out" }} />
-        <div className="flex items-center justify-between w-full gap-4">        
-            {/* Logo */}
-            <div className="flex items-center space-x-2"                >
-              <Link to="/" className="flex items-center space-x-2">
-                <Cloud
-                  className={`w-8 h-8 ${darkMode ? "text-blue-400" : "text-sky-500"}`}
-                />
-                <h1
-                  className={`text-2xl font-bold ${darkMode ? "text-white" : "text-white"}`}
-                >
-                  StoryMint
-                </h1>
-              </Link>
+    <header className="sticky top-0 z-50 bg-white border-b border-gray-200 backdrop-blur-md transition-colors duration-200 shadow-xl">
+      <div className="container mx-auto px-4 py-3">
+        {/* Progress Bar */}
+        <div 
+          className="absolute bottom-0 left-0 h-0.5 bg-orange-500 rounded-full"
+          style={{ width: `${scrollWidth}%`, transition: "width 0.2s ease-out" }} 
+        />
+        
+        <div className="flex items-center justify-between w-full px-20 gap-5">
+          {/* Logo */}
+          <div className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-2">
+              <Cloud className="w-6 h-6 text-orange-500" />
+              <h1 className="text-xl font-bold text-gray-800">StoryMint</h1>
+            </Link>
+          </div>
 
-            </div>
-            {/* Search Bar on desktop*/}
-            <div className="hidden md:block flex-1 max-w-2xl mx-8">
-              <div className="relative">
-                <Search
-                  className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 ${
-                    darkMode ? "text-slate-400" : "text-slate-500"
-                  }`}
-                />
-                <input
-                  type="text"
-                  placeholder="Search blogs by title, tags, or keywords..."
-                  value={searchTerm}
-                  onChange={(e) => onSearch(e.target.value)}
-                  className={`w-full pl-10 pr-4 py-3 rounded-full border transition-colors duration-200 ${
-                    darkMode
-                      ? "bg-slate-800 border-slate-600 text-white placeholder-slate-400 focus:border-blue-400"
-                      : "bg-white border-sky-200 text-slate-800 placeholder-slate-500 focus:border-sky-400"
-                  } focus:outline-none focus:ring-2 focus:ring-opacity-50 ${
-                    darkMode ? "focus:ring-blue-400" : "focus:ring-sky-400"
-                  }`}
-                />
-                {isSearchDisabled && <div className="search-blocker"></div>}
-              </div>
-            </div>
-          
-            {/* Right Side Controls */}
-            <div className="hidden md:flex items-center space-x-4 content-right">
-              {/* Theme Toggle
-              <button
-                onClick={toggleDarkMode}
-                className={`p-2 rounded-full transition-colors duration-200 ${
-                  darkMode
-                    ? "bg-slate-700 hover:bg-slate-600 text-yellow-400"
-                    : "bg-sky-100 hover:bg-sky-200 text-slate-600"
-                }`}
-              >
-                {darkMode ? (
-                  <Sun className="w-5 h-5" />
-                ) : (
-                  <Moon className="w-5 h-5" />
-                )}
-              </button> */}
+          {/* Navigation Links - Centered */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <Link
+              to="/"
+              className="text-sm font-medium text-gray-700 hover:text-orange-600 transition-colors"
+            >
+              Home
+            </Link>
+            <Link
+              to="/bookmarks"
+              className="text-sm font-medium text-gray-700 hover:text-orange-600 transition-colors"
+            >
+              Bookmarks
+            </Link>
+            <Link
+              to="/history"
+              className="text-sm font-medium text-gray-700 hover:text-orange-600 transition-colors"
+            >
+              History
+            </Link>
+            <Link
+              to="/AboutUs"
+              className="text-sm font-medium text-gray-700 hover:text-orange-600 transition-colors"
+            >
+              About Us
+            </Link>
+          </nav>
 
-              {/* Navigation Links */}
-              <nav className="flex items-center space-x-6">
-                <Link
-                  to="/"
-                  className={`font-medium hover:text-opacity-80 transition-colors ${
-                    darkMode
-                      ? "text-slate-300 hover:text-blue-400"
-                      : "text-lg font-semibold text-white"
-                  }`}
+          {/* Right Side Controls */}
+          <div className="flex items-center space-x-4">
+            {/* Search - Desktop */}
+            <div className="hidden md:flex items-center">
+              {/* Search Icon */}
+              {!showMobileSearch && (
+                <button 
+                  onClick={handleSearchToggle}
+                  className="p-2 rounded-full hover:bg-orange-50 transition-colors duration-200 group"
                 >
-                  Home
-                </Link>
-                <Link
-                to="/bookmarks"
-                className={`font-medium hover:text-opacity-80 transition-colors ${
-                  darkMode
-                    ? "text-slate-300 hover:text-blue-400"
-                    : "text-lg font-semibold text-white"
-                }`}
-                >
-                  Bookmarks
-                </Link>
-                
-                <Link
-                  to="/history"
-                  className={`font-medium hover:text-opacity-80 transition-colors ${
-                    darkMode
-                      ? "text-slate-300 hover:text-blue-400"
-                      : "text-lg font-semibold text-white"
-                  }`}
-                >
-                  History
-                </Link>
-
-                <Link
-                  to="/AboutUs"
-                  className={`font-medium hover:text-opacity-80 transition-colors ${
-                    darkMode
-                      ? "text-slate-300 hover:text-blue-400"
-                      : "text-lg font-semibold text-white"
-                  }`}
-                >
-                  About Us
-                </Link>
-              </nav>
-
-              {/* User Menu */}
-              {user ? (
-                <div className="relative">
-                  <button
-                    onClick={() => setShowUserMenu(!showUserMenu)}
-                    className={`flex items-center space-x-1 p-1 rounded-full transition-colors duration-200 ${
-                      darkMode
-                        ? "bg-slate-700 hover:bg-slate-600"
-                        : "bg-sky-100 hover:bg-sky-200"
-                    }`}
+                  <Search className="w-5 h-5 text-gray-600 group-hover:text-orange-600 transition-colors" />
+                </button>
+              )}
+              
+              {/* Search Bar when expanded */}
+              {showMobileSearch && (
+                <div className="flex items-center space-x-2">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <input
+                      type="text"
+                      placeholder="Search blogs by title, tags, or keywords..."
+                      value={searchTerm}
+                      onChange={handleSearchChange}
+                      className="w-64 pl-10 pr-4 py-2 rounded-full border border-gray-300 bg-white text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+                      autoFocus
+                    />
+                    {isSearchDisabled && <div className="search-blocker"></div>}
+                  </div>
+                  <button 
+                    onClick={handleSearchToggle}
+                    className="p-2 rounded-full hover:bg-orange-50 transition-colors duration-200"
                   >
-                    {user.photoURL ? (
-                      <img
-                        src={user.photoURL}
-                        alt="Profile"
-                        referrerPolicy="no-referrer"
-                        className="w-8 h-8 rounded-full object-cover"
-                      />
-                    ) : (
-                      <User
-                        className={`w-8 h-8 ${darkMode ? "text-slate-300" : "text-slate-600"}`}
-                      />
-                    )}
+                    <X className="w-5 h-5 text-gray-600 hover:text-orange-600 transition-colors" />
                   </button>
-
-                  {showUserMenu && (
-                    <div
-                      className={`absolute right-0 mt-2 w-48 rounded-lg shadow-lg border ${
-                        darkMode
-                          ? "bg-slate-800 border-slate-600"
-                          : "bg-white border-sky-200"
-                      } py-2`}
-                    >
-                      <button
-                        onClick={handleSignOut}
-                        className={`w-full text-left px-4 py-2 text-sm hover:bg-opacity-80 transition-colors ${
-                          darkMode
-                            ? "text-slate-300 hover:bg-slate-700"
-                            : "text-slate-700 hover:bg-sky-50"
-                        }`}
-                      >
-                        Sign Out
-                      </button>
-                    </div>
-                  )}
                 </div>
-              ) : (
-                <Link
-                  to="/signin"
-                  className={`theme-btn1 px-4 py-2 rounded-full font-medium transition-colors duration-200 ${
-                    darkMode
-                      ? "bg-blue-600 hover:bg-blue-700 text-white"
-                      : "bg-sky-500 hover:bg-sky-600 text-white"
-                  }`}
-                >
-                  Sign In
-                </Link>
               )}
             </div>
 
-            <div className="flex flex-row block md:hidden">
-            {/* SEARCH (Mobile icon) */}
-              <MobileSearch searchTerm={searchTerm} onSearch={onSearch} isSearchDisabled={isSearchDisabled} 
-              />
-            {/* Mobile Menu */}
+            {/* User Menu */}
+            {user ? (
+              <div className="relative">
+                <button
+                  onClick={() => setShowUserMenu(!showUserMenu)}
+                  className="flex items-center space-x-1 p-1 rounded-full transition-colors duration-200 hover:bg-orange-50"
+                >
+                  {user.photoURL ? (
+                    <img
+                      src={user.photoURL}
+                      alt="Profile"
+                      referrerPolicy="no-referrer"
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                  ) : (
+                    <User className="w-6 h-6 text-gray-600 hover:text-orange-600 transition-colors" />
+                  )}
+                </button>
+
+                {showUserMenu && (
+                  <div className="absolute right-0 mt-2 w-48 rounded-lg shadow-lg border border-gray-200 bg-white py-2 z-50">
+                    <button
+                      onClick={handleSignOut}
+                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link
+                to="/signin"
+                className="hidden md:block bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200"
+              >
+                Sign In
+              </Link>
+            )}
+
+            {/* Mobile Controls */}
+            <div className="flex items-center space-x-2 md:hidden">
+              {/* Mobile Search Icon with Animation */}
+              <div className="relative">
+                {/* Search Icon */}
+                {!showMobileSearch && (
+                  <button 
+                    onClick={handleSearchToggle}
+                    className="p-2 rounded-full hover:bg-orange-50 transition-colors duration-200 group"
+                  >
+                    <Search className="w-5 h-5 text-gray-600 group-hover:text-orange-600 transition-colors" />
+                  </button>
+                )}
+                
+                {/* Mobile Search Bar when expanded */}
+                {showMobileSearch && (
+                  <div className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white border border-gray-300 rounded-full shadow-lg animate-slide-in">
+                    <div className="flex items-center px-3 py-2">
+                      <Search className="w-4 h-4 text-gray-400 mr-2" />
+                      <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                        className="bg-transparent border-none outline-none text-gray-800 placeholder-gray-500 w-32 sm:w-40"
+                        autoFocus
+                      />
+                      <button 
+                        onClick={handleSearchToggle}
+                        className="ml-2 p-1 rounded-full hover:bg-orange-50 transition-colors"
+                      >
+                        <X className="w-4 h-4 text-gray-600 hover:text-orange-600" />
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Hamburger Menu */}
               <HamburgerMenu />
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Add CSS for animations */}
+      {/* <style jsx>{`
+        @keyframes slide-in {
+          from {
+            opacity: 0;
+            transform: translateY(-10px) scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+        .animate-slide-in {
+          animation: slide-in 0.2s ease-out forwards;
+        }
+      `}</style> */}
     </header>
   );
 }
-

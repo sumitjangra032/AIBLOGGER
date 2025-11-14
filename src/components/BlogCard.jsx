@@ -124,8 +124,10 @@ export default function BlogCard({
 
         {/* Title */}
         <Link
-          to={`/blog/${blog.id}`}
-          onClick={() => onViewIncrement(blog.id)}
+          // to={`/blog/${blog.id}`}
+          // onClick={() => onViewIncrement(blog.id)}
+          to={`/blog/${blog.slug || blog.id}`}
+          onClick={() => onViewIncrement(blog.slug || blog.id)}
           className="block"
         >
           <h2

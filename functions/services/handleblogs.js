@@ -51,6 +51,14 @@ export const BLOG_CATEGORIES = [
   "Art",
 ];
 
+function slugify(text) {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 function parseBlogText(text) {
   const cleanText = text.replace(/\r/g, '').trim();
 
@@ -192,9 +200,11 @@ const generateAIBlog = async () => {
     const { title, content, tags, author } = structuredBlog;
 
     const excerpt = content ? content.substring(0, 150) + "..." : "";
+    const slug = slugify(title);
 
     return {
       title,
+      slug,
       content,
       excerpt,
       category,
@@ -250,33 +260,36 @@ export const blogServiceNew = {
           continue
         }
 
-        const clean = JSON.parse(JSON.stringify(blog))
+        // const clean = JSON.parse(JSON.stringify(blog))
 
-        const docRef = await db.collection("blogs").add(clean)
+        // const docRef = await db.collection("blogs").add(blog)
 
-        blogs.push({ id: docRef.id, ...clean })
+        await db.collection("blogs").doc(blog.slug).set(blog);
+
+        blogs.push({ id: blog.slug, ...blog });
+
+        // blogs.push({ id: docRef.id, ...blog })
         }
         return blogs;
 
     },
 
-    cleanupOldBlogs: async () => {
+  //   cleanupOldBlogs: async () => {
    
 
-    const snapshot = await db
-            .collection("blogs")
-            .orderBy("createdAt", "desc")
-            .limit(100)
-            .get();
+  //   const snapshot = await db
+  //           .collection("blogs")
+  //           .orderBy("createdAt", "desc")
+  //           .limit(100)
+  //           .get();
 
-    const keepIds = snapshot.docs.map((doc) => doc.id);
+  //   const keepIds = snapshot.docs.map((doc) => doc.id);
 
-    const allSnapshot = await db.collection("blogs").get();
+  //   const allSnapshot = await db.collection("blogs").get();
 
-    const deletePromises = allSnapshot.docs
-      .filter((doc) => !keepIds.includes(doc.id))
-      .map((doc) => db.collection("blogs").doc(doc.id).delete());
-    await Promise.all(deletePromises);
-  }
-
+  //   const deletePromises = allSnapshot.docs
+  //     .filter((doc) => !keepIds.includes(doc.id))
+  //     .map((doc) => db.collection("blogs").doc(doc.id).delete());
+  //   await Promise.all(deletePromises);
+  // }
 };

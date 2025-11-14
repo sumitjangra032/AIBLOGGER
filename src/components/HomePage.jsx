@@ -5,11 +5,17 @@ import {blogService} from "../services/blogServices";
 import BlogCard from "./BlogCard";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth, db} from "../firebase";
-import HeroCarousel from "./HeroSection";
+// import HeroCarousel from "./HeroSection";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { startAutoRefresh,stopAutoRefresh } from "../services/refreshTimer";
 import { doc, getDoc } from "firebase/firestore";
+import Top1 from "./Homepagecomponents/top1";
+import Top2 from "./Homepagecomponents/top2";
+import Top3 from "./Homepagecomponents/top3";
+import Top4 from "./Homepagecomponents/top4";
+
+
 
 export default function HomePage({searchTerm}){
   const [user] = useAuthState(auth);
@@ -58,7 +64,7 @@ export default function HomePage({searchTerm}){
   useEffect(() => {
     const unsubscribe = blogService.getLatestBlogs((newBlogs) => {
       setBlogs(newBlogs);
-      setLoading(false);
+      setLoading(false); // This sets loading to false when blogs are loaded
     });
     return unsubscribe;
   }, []);
@@ -111,19 +117,30 @@ export default function HomePage({searchTerm}){
     return () => stopAutoRefresh();
   }, []);
 
-  const handleBookmarkToggle = async (blogId) => {
-    if (!user) return;
-    const isBookmarked = bookmarks.some(
-      (bookmark) => bookmark.blogId === blogId
-    );
-    try {
-      if (isBookmarked) {
-        await blogService.removeBookmark(user.uid, blogId);
-      } else {
-        await blogService.addBookmark(user.uid, blogId);
-      }
-    } catch (error) {}
+  const isBookmarked = (blogId) => {
+    return bookmarks.some((bookmark) => bookmark.blogId === blogId);
   };
+
+  const handleBookmarkToggle = async (blogId) => {
+  const currentUser = auth.currentUser;
+  if (!currentUser) {
+    window.location.href = "/signin";
+    return;
+  }
+
+  const uid = currentUser.uid;
+  const idStr = String(blogId);
+
+  try {
+    if (isBookmarked(blogId)) {
+      await blogService.removeBookmark(uid, idStr);
+    } else {
+      await blogService.addBookmark(uid, idStr);
+    }
+  } catch (error) {
+    console.error("Bookmark toggle failed:", error);
+  }
+ };
 
   const handleViewIncrement = useCallback(async (blogId) => {
     try {
@@ -131,148 +148,25 @@ export default function HomePage({searchTerm}){
     } catch (error) {}
   }, []);
 
-  const isBookmarked = (blogId) => {
-    return bookmarks.some((bookmark) => bookmark.blogId === blogId);
-  };
-
-  const formatLastRefresh = () => {
-    if (!lastRefresh) return "Loading...";
-    const diff = currentTime.getTime() - lastRefresh.getTime();
-    const minutes = Math.floor(diff / 60000);
-    if (minutes < 1) return "Just now";
-    if (minutes < 60) return `${minutes}m ago`;
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24) return `${hours}h ago`;
-    const days = Math.floor(hours / 24);
-    return `${days}d ago`;
-  };
-
-  if (loading) {
-    return (
-      <div className={`min-h-screen ${darkMode ? "bg-slate-900" : "bg-gradient-to-br from-sky-50 to-blue-100"}`}>
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex justify-center items-center h-64">
-            <div className={`animate-spin rounded-full h-12 w-12 border-b-2 ${darkMode ? "border-blue-400" : "border-sky-500"}`}></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className={`min-h-screen transition-colors duration-200 pb-20 ${darkMode ? "bg-slate-900" : "bg-gradient-to-br from-sky-50 to-blue-100"}`}>
-      <div className="w-full mb-6">
-        <HeroCarousel />
-      </div>
-
-      <div className="container max-w-6xl mx-auto px-4 py-4 sm:py-6">
-
-        <div className="flex flex-row md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-          <div className="w-full md:w-auto flex items-center justify-between md:justify-start gap-4">
-            <button
-              onClick={() => setShowFilters(!showFilters)}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
-                darkMode
-                  ? "bg-slate-800 hover:bg-slate-700 text-slate-300"
-                  : "bg-white hover:bg-sky-50 text-slate-700 shadow-sm border border-sky-200"
-              }`}
-            >
-              <Filter className="w-4 h-4" />
-              <span>Filters</span>
-              <ChevronDown className={`w-4 h-4 transition-transform ${showFilters ? "rotate-180" : ""}`} />
-            </button>
-          </div>
-
-          <div className="flex-row text-xs/5 items-center space-x-4">
-            <span className={`text-sm ${darkMode ? "text-slate-400" : "text-slate-500"}`}>
-              Last updated : {formatLastRefresh()}
-            </span>
-          </div>
-        </div>
-
-        {showFilters && (
-          <div
-            className={`flex overflow-x-auto gap-2 p-3 rounded-lg mb-6 ${
-              darkMode
-                ? "bg-slate-800"
-                : "bg-white shadow-sm border border-sky-200"
-            }`}
-          >
-            <button
-              onClick={() => setSelectedCategory("all")}
-              className={`px-3 py-1 text-sm whitespace-nowrap rounded-full transition-colors ${
-                selectedCategory === "all"
-                  ? darkMode
-                    ? "bg-blue-600 text-white"
-                    : "bg-sky-500 text-white"
-                  : darkMode
-                    ? "bg-slate-700 text-slate-300 hover:bg-slate-600"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-              }`}
-            >
-              All
-            </button>
-            {BLOG_CATEGORIES.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-3 py-1 text-sm whitespace-nowrap rounded-full transition-colors ${
-                  selectedCategory === category
-                    ? darkMode
-                      ? "bg-blue-600 text-white"
-                      : "bg-sky-500 text-white"
-                    : darkMode
-                      ? "bg-slate-700 text-slate-300 hover:bg-slate-600"
-                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {searchTerm && (
-          <div className={`mb-6 text-center ${darkMode ? "text-slate-300" : "text-slate-600"}`}>
-            Found {filteredBlogs.length} result
-            {filteredBlogs.length !== 1 ? "s" : ""} for "{searchTerm}"
-          </div>
-        )}
-
-        {filteredBlogs.length === 0 ? (
-          <div className="text-center py-16">
-            <div className={`text-6xl mb-4 ${darkMode ? "text-slate-600" : "text-slate-300"}`}>
-              📝
-            </div>
-            <h3 className={`text-xl font-semibold mb-2 ${darkMode ? "text-slate-300" : "text-slate-600"}`}>
-              No blogs found
-            </h3>
-            <p className={`${darkMode ? "text-slate-400" : "text-slate-500"}`}>
-              {searchTerm
-                ? "Try adjusting your search terms or filters"
-                : "Check back soon for fresh content!"}
-            </p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredBlogs.map((blog) => (
-              <div
-                key={blog.id}
-                data-aos="fade-up"
-                data-aos-delay="80"
-                data-aos-duration="400"
-              >
-                <BlogCard
-                  blog={blog}
-                  isBookmarked={isBookmarked(blog.id)}
-                  onBookmarkToggle={handleBookmarkToggle}
-                  onViewIncrement={handleViewIncrement}
-                />
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+    <div className={`min-h-screen  pb-20 ${darkMode ? "bg-slate-900" : "bg-white"}`}>
+      <Top1 
+        blogs={blogs}
+        onBookmarkToggle={handleBookmarkToggle}
+        onViewIncrement={handleViewIncrement} 
+        loading={loading} 
+        isBookmarked={isBookmarked}
+      />
+      <Top2 
+        blogs={blogs}
+        onBookmarkToggle={handleBookmarkToggle}
+        onViewIncrement={handleViewIncrement} 
+        loading={loading} 
+        isBookmarked={isBookmarked}
+      />
+      {/* <Top3 /> */}
+      <Top3 />
+      <Top4 />
     </div>
   );
 }

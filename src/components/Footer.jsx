@@ -127,7 +127,7 @@ const Footer = () => {
                 <p>203 Innovation Street,<br /> Bangalore, India</p>
               </li>
               <li>
-                <a href="tel:+911234567890" className="hover:text-white transition">
+                <a href="tel:+919034817987" className="hover:text-white transition">
                   +91 9034817987
                 </a>
               </li>

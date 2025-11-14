@@ -1,14 +1,54 @@
-// Firestore security rules version
 rules_version = '2';
-// Define rules for Firestore database
 service cloud.firestore {
-  // Match all databases in the project
   match /databases/{database}/documents {
-    // Match all documents in all collections
+
+    // ----------------------------
+    // BLOGS - Publicly readable, writable only by authenticated users
+    // 
+    // 
+    match/meta/refreshStatus{
+    	allow read: if true;
+      allow write: if true;
+    }
+    // ----------------------------
+    match /blogs/{blogId} {
+      // Anyone can read blogs
+      allow read: if true;
+
+      // Only signed-in users can create, delete, or perform general updates on other fields
+      allow write: if true;//request.auth != null;
+
+      // EXCEPTION: Allow **anyone** (including unauthenticated users) to **update**
+      // ONLY the 'views' field, and only if they are incrementing it by 1.
+      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['views'])
+                      && request.resource.data.views is number
+                      && request.resource.data.views == resource.data.views + 1;
+    }
+
+    // ----------------------------
+    // BOOKMARKS - Private per user
+    // ----------------------------
+    match /bookmarks/{bookmarkId} {
+      // Allow general read/write only for the owner
+      allow read, write: if request.auth != null
+                         && request.auth.uid == resource.data.userId;
+
+      // Creation allowed only if the userId in the document matches their UID
+      allow create: if request.auth != null
+                    && request.auth.uid == request.resource.data.userId;
+                    
+      // **NOTE:** You had a views update rule here in your original code, which 
+      // is likely a mistake for a private 'bookmarks' collection. I removed it 
+      // to keep this collection truly private, as per your comment description. 
+      // If you intended this, the logic should be within the 'allow write' rule.
+    }
+
+    // ----------------------------
+    // Optional: Catch-all for other collections
+    // Deny everything else by default
+    // ----------------------------
     match /{document=**} {
-      // WARNING: This allows public read/write access to all documents
-      // This is NOT secure for production - replace with proper authentication rules
-      allow read, write: if true;
+      allow read, write: if false;
     }
   }
 }

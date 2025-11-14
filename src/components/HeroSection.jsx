@@ -176,13 +176,13 @@ const HeroCarousel = () => {
 
   return (
     <div
-      className="relative w-full"
+      className="relative max-w-7xl mx-auto px-20"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
       {/* Carousel wrapper */}
-      <div className="relative h-80 md:h-[800px] overflow-hidden pb-20">
+      <div className="relative  h-80 md:h-[120px] overflow-hidden pb-20 mt-4">
         {images.map((img, index) => (
           <div
             key={index}
@@ -195,38 +195,9 @@ const HeroCarousel = () => {
               alt={`Slide ${index + 1}`}
               className="w-full h-full object-cover"
             />
-            {/* Category overlay */}
-            {/* <div className="mt-12 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white px-4 py-2">
-            <h2 className="text-4xl font-bold mb-2 bg-black bg-opacity-40 px-2 py-2 rounded">
-                {img.category[0].toUpperCase() + img.category.slice(1)}
-            </h2>
-            <p className="text-lg font-medium text-white bg-black bg-opacity-40 px-4 py-2 rounded">
-                {categories_quotes.find(cq => cq.name.toLowerCase() === img.category.toLowerCase())?.description || ""}
-            </p>
-                        </div> */}
 
           </div>
         ))}
-      </div>
-
-      {/* Controls */}
-      <div className="absolute inset-y-0 left-0 flex items-center z-20">
-        <button
-          onClick={handlePrev}
-          className="bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 ml-2"
-          aria-label="Previous slide"
-        >
-          &#10094;
-        </button>
-      </div>
-      <div className="absolute inset-y-0 right-0 flex items-center z-20">
-        <button
-          onClick={handleNext}
-          className="bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 mr-2"
-          aria-label="Next slide"
-        >
-          &#10095;
-        </button>
       </div>
 
       {/* Slide Indicators */}
@@ -235,7 +206,7 @@ const HeroCarousel = () => {
           <button
             key={index}
             onClick={() => handleDotClick(index)}
-            className={`w-3 h-3 rounded-full focus:outline-none ${
+            className={`w-2 h-2 rounded-full focus:outline-none ${
               index === currentIndex ? "bg-white" : "bg-gray-400"
             }`}
             aria-label={`Go to slide ${index + 1}`}
