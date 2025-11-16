@@ -114,16 +114,16 @@ useEffect(() => {
       <Link
         to={`/blog/${main.slug || main.id}`}
         onClick={() => onViewIncrement(main.slug || main.id)}
-        className="relative h-[500px] overflow-hidden group col-span-2"
+        className="relative h-[500px] overflow-hidden group col-span-2 rounded-md"
         >
         <img
             src={main.imageUrl}
             alt={main.title}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 rounded-md"
         />
 
         <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/85 via-black/40 to-transparent text-white">
-            <span className="px-3 py-1 text-xs font-semibold rounded bg-[#EB5757]">
+            <span className="px-3 py-1 text-xs font-semibold rounded bg-[#EB5757] shadow shadow-red-500">
             {main.category}
             </span>
 
@@ -166,18 +166,18 @@ useEffect(() => {
               key={b.id}
               to={`/blog/${b.slug || b.id}`}
               onClick={() => onViewIncrement(b.slug || b.id)}
-              className="relative h-[156px] overflow-hidden group "
+              className="relative h-[156px] overflow-hidden group rounded-md"
             >
               <img
                 src={b.imageUrl}
                 alt={b.title}
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 "
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 rounded-md"
               />
 
               <div className="absolute inset-0 p-3 flex flex-col justify-between text-white bg-gradient-to-b from-black/20 to-black/75">
                 <div>
                   <div className="mt-6">
-                    <span className="px-2 py-1 text-[10px] font-semibold rounded bg-[#EB5757]">
+                    <span className="px-2 py-1 text-[10px] font-semibold rounded bg-[#EB5757] shadow shadow-red-500">
                       {b.category}
                     </span>
                   </div>
@@ -215,7 +215,7 @@ useEffect(() => {
         })}
       </div>
     </section>
-    <div className="mx-auto mx-20 mb-8">
+    <div className="mx-auto mx-20 mb-8 rounded-md overflow-hidden">
      <HeroCarousel />
     </div>
 

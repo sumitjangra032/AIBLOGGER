@@ -10,6 +10,7 @@ import {
   FaEnvelope,
   FaPaperPlane,
 } from "react-icons/fa";
+import { Calendar } from "lucide-react";
 
 export default function Top3() {
   const [blogs, setBlogs] = useState([]);
@@ -45,14 +46,20 @@ export default function Top3() {
     { name: "GitHub", icon: FaGithub, color: "text-gray-900", hoverBg: "hover:bg-gray-900", url: "https://github.com/sumitjangra032/" },
   ];
 
-  const formatDate = (ts) => {
-    if (!ts) return "Recently";
-    const d = ts?.toDate ? ts.toDate() : new Date(ts);
-    if (isNaN(d.getTime())) return "Recently";
-    const day = d.getDate();
-    const month = d.toLocaleString("en-US", { month: "long" }).toUpperCase();
-    const year = d.getFullYear();
-    return `${day} ${month}, ${year}`;
+ const formatDate = (ts) => {
+      if (!ts) return "Recently";
+
+      const d = ts?.toDate ? ts.toDate() : new Date(ts);
+      if (isNaN(d.getTime())) return "Recently";
+
+      const day = d.getDate();
+
+      let month = d.toLocaleString("en-US", { month: "long" });
+      month = month.charAt(0).toUpperCase() + month.slice(1).toLowerCase();
+
+      const year = d.getFullYear();
+
+      return `${day} ${month}, ${year}`;
   };
 
   if (loading) {
@@ -135,27 +142,26 @@ export default function Top3() {
           {main ? (
             <Link 
               to={`/blog/${main?.slug || main.id}`} 
-              className="relative h-[300px] sm:h-[420px] overflow-hidden group rounded-sm shadow-md"
+              className="relative h-[300px] sm:h-[420px] overflow-hidden group rounded-md shadow-md"
             >
               <img
                 src={main?.imageUrl || "https://picsum.photos/seed/tech1/1200/800"}
                 alt={main?.title || "Featured post"}
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 rounded-md"
               />
               <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-all duration-300" />
               <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                <span className="inline-block text-xs font-semibold px-3 py-1 rounded-sm bg-[#EB5757] uppercase mb-3">
+                <span className="inline-block text-xs font-semibold px-3 py-1 rounded-md bg-[#EB5757] uppercase mb-3 shadow shadow-red-500">
                   {main?.category || "NEWS"}
                 </span>
                 <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold leading-tight mb-3 line-clamp-2 hover:text-red-500">
                   {main?.title || "Untitled"}
                 </h3>
-                <div className="flex flex-wrap items-center text-sm text-gray-200 gap-3">
+                <div className="flex flex-wrap items-center text-sm text-gray-200">
                   <span>By {main?.author || "Admin"}</span>
-                  <span>•</span>
+                  <Calendar className="ml-2 w-4 h-4 mr-2" />
                   <span>{formatDate(main?.createdAt)}</span>
-                  <span>•</span>
-                  <span>{main?.views || 0} Views</span>
+                  <span className="ml-2 ">{main?.views || 0} Views</span>
                 </div>
               </div>
             </Link>
@@ -172,22 +178,25 @@ export default function Top3() {
                 <Link 
                   key={post.id} 
                   to={`/blog/${post?.slug || post.id}`}
-                  className="grid grid-cols-3 items-center py-2 rounded-sm hover:bg-gray-50 transition-colors group overflow-hidden"
+                  className="grid grid-cols-3 items-center py-2 rounded-sm hover:bg-gray-50 transition-colors group overflow-hidden border-b border-gray-300"
                 >
                   <div className="col-span-2 space-y-3">
-                    <span className="inline-block text-white text-xs font-semibold px-2 py-1 uppercase rounded-sm bg-[#EB5757]">
+                    <span className="inline-block text-white text-xs font-semibold px-2 py-1 uppercase rounded-md bg-[#EB5757] shadow shadow-red-500">
                       {post?.category || "NEWS"}
                     </span>
                     <h4 className="text-sm font-bold pr-2 text-gray-900 line-clamp-2 hover:text-red-600 transition-colors">
                       {post?.title || "Untitled"}
                     </h4>
-                    <p className="text-xs text-gray-500">{formatDate(post?.createdAt)}</p>
+                    <div className="flex flex-wrap items-center">
+                      <Calendar className="w-4 h-4" />
+                      <p className="ml-1 text-xs text-gray-500">{formatDate(post?.createdAt)}</p>
+                    </div>
                   </div>
-                  <div className="col-span-1 overflow-hidden rounded-sm aspect-[4/3]">
+                  <div className="col-span-1 overflow-hidden rounded-sm aspect-[4/3] rounded-md">
                     <img 
                       src={post?.imageUrl || `https://picsum.photos/seed/tech${post?.id || Math.random()}/100/100`} 
                       alt={post?.title || "thumb"} 
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 rounded-md"
                     />
                   </div>
                 </Link>
@@ -198,20 +207,6 @@ export default function Top3() {
               </div>
             )}
           </div>
-        </div>
-
-        {/* CTA Banner */}
-        <div className="bg-cyan-500 text-white rounded-sm p-6 flex flex-col sm:flex-row justify-between items-center gap-4 shadow-xl">
-          <h3 className="text-xl sm:text-2xl font-bold text-center sm:text-left">Modern Technology Fest Here</h3>
-          {/* <button className="bg-white text-cyan-500 font-semibold py-3 px-6 rounded-full hover:bg-gray-100 transition-colors whitespace-nowrap">
-            See Details
-          </button> */}
-          <Link 
-          to="/history"
-          className="bg-white text-cyan-500 font-semibold py-3 px-6 rounded-full hover:bg-gray-100 transition-colors whitespace-nowrap"
-          >
-         See Details
-        </Link>
         </div>
       </div>
 
@@ -243,26 +238,26 @@ export default function Top3() {
         </div>
 
         {/* Newsletter Section */}
-        <div className="bg-gray-800 p-6 rounded-sm text-white">
-          <div className="text-center mb-6">
+        <div className="bg-gray-800 p-6 rounded-md text-white rounded-md ">
+          <div className="text-center mb-5 ">
             <FaEnvelope className="w-12 h-12 mx-auto text-gray-400 mb-4" />
             <h4 className="text-2xl font-bold mb-3">Daily Newsletter</h4>
-            <p className="text-sm text-gray-300">
+            <p className="text-sm text-gray-300 mt-4">
               Get All The Top Stories from Blogs To Keep Track.
             </p>
           </div>
 
-          <div className="relative">
+          <div className="relative py-5" >
             <input 
               type="email" 
               placeholder="Enter your e-mail" 
-              className="w-full py-3 pl-4 pr-16 text-sm text-gray-800 bg-white rounded-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full py-3 pl-4 pr-16 text-sm text-gray-800 bg-white  focus:outline-none focus:ring-2 focus:ring-red-500 "
             />
             <button 
               type="submit" 
-              className="absolute right-0 top-0 h-full w-14 bg-red-500 rounded-r-lg flex items-center justify-center hover:bg-red-600 transition-colors"
+              className="absolute right-0 top-0 h-11 w-14 bg-red-500 mt-5 flex items-center justify-center hover:bg-red-600 transition-colors"
             >
-              <FaPaperPlane className="w-5 h-5 text-white" />
+              <FaPaperPlane className="w-5 h-5 text-white " />
             </button>
           </div>
         </div>

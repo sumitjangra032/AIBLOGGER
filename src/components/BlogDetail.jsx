@@ -283,7 +283,7 @@ export default function BlogDetail(){
                   className={`px-3 py-1 text-sm font-semibold rounded-full ${
                     darkMode
                       ? "bg-blue-900 text-blue-200"
-                      : "bg-sky-100 text-sky-700"
+                      : "bg-red-500 text-white"
                   }`}
                 >
                   {blog.category}

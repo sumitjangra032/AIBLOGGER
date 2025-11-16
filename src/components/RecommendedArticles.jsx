@@ -81,7 +81,7 @@ export default function RecommendedArticles({ category, excludeId }) {
                 <div className="flex-1 space-y-2">
 
                   <div className="flex items-center gap-2">
-                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-slate-200 text-slate-550">
+                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-red-500 text-white">
                       {item.category}
                     </span>
                   </div>

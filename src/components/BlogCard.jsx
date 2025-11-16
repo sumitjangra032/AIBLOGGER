@@ -107,7 +107,7 @@ export default function BlogCard({
         <div className="flex items-center justify-between mb-3">
           <span
             className={`px-3 py-1 text-xs font-semibold rounded-full ${
-              darkMode ? "bg-blue-900 text-blue-200" : "bg-slate-200 text-sky-700"
+              darkMode ? "bg-blue-900 text-blue-200" : "bg-red-500 text-white"
             }`}
           >
             {blog.category}

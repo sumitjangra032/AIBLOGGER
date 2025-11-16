@@ -111,17 +111,17 @@ export default function Top2({
               onClick={() => onViewIncrement(b.slug || b.id)}
               className=" min-w-[520px] snap-start bg-white rounded-sm overflow-hidden shadow-sm flex hover:shadow-md transition"
             >
-              <div className="group w-44 min-w-[176px] h-28 md:h-36 lg:h-36 overflow-hidden  ">
+              <div className="group w-44 min-w-[176px] h-28 md:h-36 lg:h-36 overflow-hidden rounded-md ">
                 <img
                   src={b.imageUrl}
                   alt={b.title}
-                  className="w-full h-full object-cover transform rounded-sm transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-full object-cover transform rounded-sm transition-transform duration-300 group-hover:scale-105 rounded-md"
                 />
               </div>
 
               <div className="flex-1 p-3 flex flex-col justify-between">
                 <div>
-                  <span className="inline-block text-[10px] uppercase font-semibold bg-[#EB5757] text-white px-2 py-1 rounded-sm">
+                  <span className="inline-block text-[10px] uppercase font-semibold bg-[#EB5757] text-white px-2 py-1 rounded-md shadow shadow-red-500">
                     {b.category}
                   </span>
 

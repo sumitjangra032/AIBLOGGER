@@ -12,6 +12,7 @@ import AboutUs from "./components/AboutUs";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import TermsAndConditions from "./components/TermsandConditions";
 import ScrollToTop from './components/ScrollToTop';
+import CategoryPage from './components/CategoryPage';
 
 
 
@@ -34,12 +35,14 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage searchTerm={searchTerm} />} />
               <Route path="/blog/:id" element={<BlogDetail />} />
+              <Route path="/blog/:slug" element={<BlogDetail />} />
               <Route path="/bookmarks" element={<BookmarksPage />} />
               <Route path="/AboutUs" element={<AboutUs />} />
               <Route path="/history" element={<HistoryPage />} />
               <Route path="/signin" element={<SignIn />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+              <Route path="/category/:slug" element={<CategoryPage />} />
             </Routes>
           </main>
           <Footer />
