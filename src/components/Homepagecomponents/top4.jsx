@@ -71,9 +71,6 @@ export default function Top4() {
   const smallPosts = trending.slice(1, 4); 
   const popularPosts = trending.slice(5, 8); 
 
-  console.log("Trending Posts:", popularPosts.id);
-
-
   return (
 
       <section className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 mt-6">
@@ -131,7 +128,7 @@ export default function Top4() {
                               alt={post?.title} 
                               className="w-full h-full object-cover overflow-hidden rounded-md transition-transform duration-300 ease-out group-hover:scale-105" />
                       </div>
-                      <div className="lg:col-span-2 border-b border-gray-300">
+                      <div className="lg:col-span-2 border-b border-gray-300 hover:bg-gray-200">
                           <span className="inline-block text-xs text-white font-semibold px-3 py-1 rounded-md bg-[#EB5757] uppercase mb-2 shadow shadow-red-500">
                               {post?.category || "NEWS"}
                           </span>
@@ -161,7 +158,7 @@ export default function Top4() {
                   <h2 className="text-2xl font-bold text-gray-800 border-b-2 border-red-500 pb-1">Trending Articles</h2>
                   <Link 
                       to="/history" 
-                      className="text-red-500 hover:text-red-700 text-sm font-semibold flex items-center shadow shadow-red-500 px-4 py-2 rounded-md transition-colors hover:bg-red-50"
+                      className="text-red-500 hover:text-red-700 text-sm font-semibold flex items-center border border-red-500 px-4 py-2 transition-colors hover:bg-red-50"
                   >
                       VIEW ALL
                       <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -170,7 +167,7 @@ export default function Top4() {
                   </Link>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6  mt-7" >
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6  mt-6" >
                   <div className="lg:col-span-1 overflow-hidden rounded-md group aspect-[4/3]">
                       <img src={largePost?.imageUrl} 
                           alt={largePost?.title} 
@@ -196,8 +193,9 @@ export default function Top4() {
                           to={`/blog/${largePost?.slug || largePost?.id}`}
                           className="text-red-500 hover:text-red-700 text-sm font-semibold shadow shadow-red-500 px-4 py-2 rounded-sm transition-colors hover:bg-red-50"
                           >
-                          READ MORE
+                          READ MORE 
                           </Link>
+
                       </div>
                   </div>
                   <div className="lg:col-span-2 flex flex-row items-center mx-auto gap-4">

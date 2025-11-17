@@ -178,9 +178,9 @@ export default function Top3() {
                 <Link 
                   key={post.id} 
                   to={`/blog/${post?.slug || post.id}`}
-                  className="grid grid-cols-3 items-center py-2 rounded-sm hover:bg-gray-50 transition-colors group overflow-hidden border-b border-gray-300"
+                  className="grid grid-cols-3 items-center py-2 rounded-sm hover:bg-gray-200 transition-colors group overflow-hidden"
                 >
-                  <div className="col-span-2 space-y-3">
+                  <div className="col-span-2 space-y-3 border-b border-gray-300">
                     <span className="inline-block text-white text-xs font-semibold px-2 py-1 uppercase rounded-md bg-[#EB5757] shadow shadow-red-500">
                       {post?.category || "NEWS"}
                     </span>

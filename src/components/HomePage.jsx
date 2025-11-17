@@ -14,6 +14,7 @@ import Top1 from "./Homepagecomponents/top1";
 import Top2 from "./Homepagecomponents/top2";
 import Top3 from "./Homepagecomponents/top3";
 import Top4 from "./Homepagecomponents/top4";
+import Top5 from "./Homepagecomponents/top5";
 
 
 
@@ -167,6 +168,8 @@ export default function HomePage({searchTerm}){
       {/* <Top3 /> */}
       <Top3 />
       <Top4 />
+      <Top5 blogs={blogs}/>
+
     </div>
   );
 }
