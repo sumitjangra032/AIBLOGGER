@@ -187,14 +187,12 @@ export default function HistoryPage(){
   if (loading) {
     return (
       <div
-        className={`min-h-screen ${darkMode ? "bg-slate-900" : "bg-gradient-to-br from-sky-50 to-blue-100"}`}
+        className={`min-h-screen ${darkMode ? "bg-slate-900" : "bg-red-20"}`}
       >
         <div className="container mx-auto px-4 py-8">
           <div className="flex justify-center items-center h-64">
             <div
-              className={`animate-spin rounded-full h-12 w-12 border-b-2 ${
-                darkMode ? "border-blue-400" : "border-sky-500"
-              }`}
+              className="spinner"
             ></div>
           </div>
         </div>
@@ -207,7 +205,7 @@ export default function HistoryPage(){
   return (
     <div
       className={`min-h-screen transition-colors duration-200 ${
-        darkMode ? "bg-slate-900" : "bg-gradient-to-br from-sky-50 to-blue-100"
+        darkMode ? "bg-slate-900" : "bg-red-20"
       }`}
     >
       <div className="container mx-auto px-4 py-8">
@@ -221,7 +219,7 @@ export default function HistoryPage(){
             >
               <History
                 className={`w-8 h-8 ${
-                  darkMode ? "text-blue-400" : "text-sky-600"
+                  darkMode ? "text-blue-400" : "text-red-500"
                 }`}
               />
             </div>
@@ -259,9 +257,9 @@ export default function HistoryPage(){
               className={`w-full pl-10 pr-4 py-3 rounded-lg border transition-colors duration-200 ${
                 darkMode
                   ? "bg-slate-800 border-slate-600 text-white placeholder-slate-400 focus:border-blue-400"
-                  : "bg-white border-sky-200 text-slate-800 placeholder-slate-500 focus:border-sky-400"
+                  : "bg-white border-red-400 text-slate-800 placeholder-slate-500 focus:border-red-500"
               } focus:outline-none focus:ring-2 focus:ring-opacity-50 ${
-                darkMode ? "focus:ring-blue-400" : "focus:ring-sky-400"
+                darkMode ? "focus:ring-blue-400" : "focus:ring-red-500"
               }`}
             />
           </div>
@@ -274,9 +272,9 @@ export default function HistoryPage(){
               className={`appearance-none px-4 py-3 pr-8 rounded-lg border transition-colors duration-200 ${
                 darkMode
                   ? "bg-slate-800 border-slate-600 text-white focus:border-blue-400"
-                  : "bg-white border-sky-200 text-slate-800 focus:border-sky-400"
+                  : "bg-white border-red-400 text-slate-800 focus:border-red-500"
               } focus:outline-none focus:ring-2 focus:ring-opacity-50 ${
-                darkMode ? "focus:ring-blue-400" : "focus:ring-sky-400"
+                darkMode ? "focus:ring-blue-400" : "focus:ring-red-500"
               }`}
             >
               <option value="all">All Categories</option>
@@ -301,9 +299,9 @@ export default function HistoryPage(){
               className={`appearance-none px-4 py-3 pr-8 rounded-lg border transition-colors duration-200 ${
                 darkMode
                   ? "bg-slate-800 border-slate-600 text-white focus:border-blue-400"
-                  : "bg-white border-sky-200 text-slate-800 focus:border-sky-400"
+                  : "bg-white border-red-400 text-slate-800 focus:border-red-400"
               } focus:outline-none focus:ring-2 focus:ring-opacity-50 ${
-                darkMode ? "focus:ring-blue-400" : "focus:ring-sky-400"
+                darkMode ? "focus:ring-blue-400" : "focus:ring-red-500"
               }`}
             >
               <option value="all">All Time</option>
@@ -363,7 +361,7 @@ export default function HistoryPage(){
               className={`inline-flex items-center px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 darkMode
                   ? "bg-blue-600 hover:bg-blue-700 text-white"
-                  : "bg-sky-500 hover:bg-sky-600 text-white"
+                  : "bg-red-500 hover:bg-red-600 text-white"
               }`}
             >
               Clear Filters
@@ -426,7 +424,7 @@ export default function HistoryPage(){
                   className={`flex items-center space-x-2 px-8 py-3 rounded-lg font-medium transition-colors duration-200 mx-auto ${
                     darkMode
                       ? "bg-slate-800 hover:bg-slate-700 text-slate-300 disabled:bg-slate-700 disabled:text-slate-500"
-                      : "bg-white hover:bg-slate-50 text-slate-700 shadow-sm border border-sky-200 disabled:bg-slate-100 disabled:text-slate-400"
+                      : "bg-white hover:bg-slate-50 text-slate-700 shadow-sm border border-red-200 disabled:bg-slate-100 disabled:text-slate-400"
                   }`}
                 >
                   {loadingMore ? (

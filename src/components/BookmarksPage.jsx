@@ -103,7 +103,7 @@ export default function BookmarksPage(){
   if (!user) {
     return (
       <div
-        className={`min-h-screen ${darkMode ? "bg-slate-900" : "bg-gradient-to-br from-sky-50 to-blue-100"}`}
+        className={`min-h-screen ${darkMode ? "bg-slate-900" : "bg-red-20"}`}
       >
         <div className="container mx-auto px-4 py-8">
           <div className="text-center py-16">
@@ -129,7 +129,7 @@ export default function BookmarksPage(){
               className={`inline-flex items-center px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${
                 darkMode
                   ? "bg-blue-600 hover:bg-blue-700 text-white"
-                  : "bg-sky-500 hover:bg-sky-600 text-white"
+                  : "bg-red-500 hover:bg-red-600 text-white"
               }`}
             >
               Sign In
@@ -161,7 +161,7 @@ export default function BookmarksPage(){
   return (
     <div
       className={`min-h-screen transition-colors duration-200 ${
-        darkMode ? "bg-slate-900" : "bg-gradient-to-br from-sky-50 to-blue-100"
+        darkMode ? "bg-slate-900" : "bg-red-20"
       }`}
     >
       <div className="container mx-auto px-4 py-8">

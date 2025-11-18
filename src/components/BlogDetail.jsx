@@ -189,14 +189,12 @@ export default function BlogDetail(){
   if (loading) {
     return (
       <div
-        className={`min-h-screen ${darkMode ? "bg-slate-900" : "bg-gradient-to-br from-sky-50 to-blue-100"}`}
+        className={`min-h-screen ${darkMode ? "bg-slate-900" : "bg-red-30"}`}
       >
         <div className="container mx-auto px-4 py-8">
           <div className="flex justify-center items-center h-64">
             <div
-              className={`animate-spin rounded-full h-12 w-12 border-b-2 ${
-                darkMode ? "border-blue-400" : "border-sky-500"
-              }`}
+              className="spinner"
             ></div>
           </div>
         </div>

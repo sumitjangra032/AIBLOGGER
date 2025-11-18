@@ -42,12 +42,12 @@ function SignIn(){
           <div className="flex justify-center mb-4">
             <div
               className={`p-4 rounded-full ${
-                darkMode ? "bg-slate-700" : "bg-sky-100"
+                darkMode ? "bg-slate-700" : "bg-red-100"
               }`}
             >
               <Cloud
                 className={`w-8 h-8 ${
-                  darkMode ? "text-blue-400" : "text-sky-500"
+                  darkMode ? "text-blue-400" : "text-red-500"
                 }`}
               />
             </div>
@@ -75,7 +75,7 @@ function SignIn(){
           <div className="flex items-center">
             <div
               className={`w-2 h-2 rounded-full mr-3 ${
-                darkMode ? "bg-blue-400" : "bg-sky-500"
+                darkMode ? "bg-blue-400" : "bg-red-500"
               }`}
             ></div>
             <span>Bookmark articles to read later</span>
@@ -83,7 +83,7 @@ function SignIn(){
           <div className="flex items-center">
             <div
               className={`w-2 h-2 rounded-full mr-3 ${
-                darkMode ? "bg-blue-400" : "bg-sky-500"
+                darkMode ? "bg-blue-400" : "bg-red-500"
               }`}
             ></div>
             <span>Browse fresh content updated hourly</span>
@@ -91,7 +91,7 @@ function SignIn(){
           <div className="flex items-center">
             <div
               className={`w-2 h-2 rounded-full mr-3 ${
-                darkMode ? "bg-blue-400" : "bg-sky-500"
+                darkMode ? "bg-blue-400" : "bg-red-500"
               }`}
             ></div>
             <span>Search and filter through all articles</span>

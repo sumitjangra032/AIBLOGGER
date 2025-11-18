@@ -43,12 +43,12 @@ export default function RecommendedArticles({ category, excludeId }) {
         Recommended Articles
       </h2>
 
-      <div className="divide-y divide-slate-200 dark:divide-slate-700">
+      <div className="divide-y divide-slate-200 dark:divide-slate-700 ">
         {loading &&
           Array.from({ length: 6 }).map((_, i) => (
             <div
               key={i}
-              className="flex items-start gap-3 py-3 animate-pulse rounded-lg"
+              className="flex items-start gap-3 py-3 animate-pulse rounded-lg "
             >
               <div className="w-20 h-20 bg-slate-300/70 dark:bg-slate-700 rounded-lg" />
               <div className="flex-1 space-y-2">
@@ -78,7 +78,7 @@ export default function RecommendedArticles({ category, excludeId }) {
                   alt="Reference"
                 />
 
-                <div className="flex-1 space-y-2">
+                <div className="flex-1 space-y-2 hover:bg-red-50">
 
                   <div className="flex items-center gap-2">
                     <span className="px-3 py-1 text-xs font-semibold rounded-full bg-red-500 text-white">
